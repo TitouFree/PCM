@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
-"""Génère les deux plaquettes PDF de Paris Carrelages et Matériaux.
-Sources officielles : Ebauche 4 - Le Magazine.pdf + Catalogue general PCM.pdf.
-Aucune référence, marque ou caractéristique inventée : les pages du catalogue
-général sont fusionnées telles quelles (pages PDF d'origine, non converties).
+"""Génère les DEUX NOUVELLES plaquettes fusionnées de Paris Carrelages et Matériaux.
+
+Sources officielles : « Ebauche 4 - Le Magazine.pdf » (identité, textes, visuels)
+et « Catalogue general PCM.pdf » (37 pages de références, 100 % image).
+
+Principe : nouvelle composition graphique (ReportLab) ; le contenu-références du
+catalogue est réorganisé sous les 11 familles du parcours du chantier. Chaque page
+du catalogue d'origine est reprise SANS MODIFICATION de contenu, rendue en haute
+définition et recadrée dans la maquette uniforme (bandeau famille, marges,
+pagination, pied de page PCM). Aucune référence inventée, aucune page supprimée.
 """
 import io
 import os
 
 import pymupdf
 from PIL import Image
-from pypdf import PdfReader, PdfWriter
 from reportlab.lib.colors import HexColor
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
@@ -22,7 +27,8 @@ FONTS = f"{SRC}/fonts"
 OUT = "/app/frontend/public/documents"
 os.makedirs(OUT, exist_ok=True)
 
-W, H = 595.27, 841.89  # A4 portrait
+W, H = 595.27, 841.89   # A4 portrait
+LW, LH = 841.89, 595.28  # A4 paysage (pages de références, lisibilité préservée)
 
 NAVY = HexColor("#0D3A5C")
 TERRA = HexColor("#A8623E")
@@ -32,6 +38,7 @@ SLATE = HexColor("#5A5F66")
 STONE = HexColor("#8E949D")
 LINE = HexColor("#DDD8D0")
 WHITE = HexColor("#FFFFFF")
+SAND_SOFT = HexColor("#E9C29F")
 
 for name, fn in [
     ("Playfair", "PlayfairDisplay-400.ttf"), ("Playfair-It", "PlayfairDisplay-400-Italic.ttf"),
@@ -67,55 +74,35 @@ FAMILIES = [
      "Profilés, croisillons, nivellement, petit colisage en libre-service.", "carreaux_ciment"),
 ]
 
-# Index réel du catalogue général (lu page par page sur les en-têtes d'origine).
-# page plaquette = page catalogue + 18 (18 pages éditoriales avant le catalogue).
-CATALOG_OFFSET = 18
-CATALOG_SECTIONS = [
-    ("Couverture", 1, 1),
-    ("Index", 2, 2),
-    ("Blocs béton, briques & terre cuite", 3, 4),
-    ("Ciments, chaux, plâtres, bétons & mortiers", 5, 6),
-    ("Ferraillage & acier", 7, 7),
-    ("Bois de coffrage, charpente & panneaux", 8, 9),
-    ("Toiture, couverture & zinguerie", 10, 10),
-    ("Isolation", 11, 12),
-    ("Plaques de plâtre, ossatures & carreaux de plâtre", 13, 14),
-    ("Enduits, ragréages & mortiers techniques", 15, 16),
-    ("Carrelage & faïence", 17, 17),
-    ("Colles, joints & accessoires de pose", 18, 20),
-    ("Outillage du carreleur", 21, 21),
-    ("Assainissement, PVC & géotextiles", 22, 22),
-    ("Peinture & finition", 23, 25),
-    ("Outillage & machines", 26, 28),
-    ("Visserie, fixation & chimie du bâtiment", 29, 30),
-    ("Installation de chantier, protection & EPI", 31, 32),
-    ("Menuiserie", 33, 33),
-    ("Livraison & services", 34, 34),
-    ("Nous trouver", 35, 35),
-    ("Notes", 36, 36),
-    ("4e de couverture", 37, 37),
-]
-
-# Famille (01-11) -> indices des sections du catalogue qui la couvrent.
-FAMILY_SECTIONS = {
-    "01": [17],
-    "02": [12, 15],
-    "03": [2, 3, 4, 13],
-    "04": [6],
-    "05": [7],
-    "06": [8],
-    "07": [10],
-    "08": [9, 11],
-    "09": [14],
-    "10": [5, 18],
-    "11": [16, 11],
+# Réorganisation RÉELLE du catalogue (lu page par page sur les en-têtes d'origine) :
+# famille -> [(nom de section d'origine, page catalogue début, page catalogue fin)]
+FAMILY_PAGES = {
+    "01": [("Installation de chantier, protection & EPI", 31, 32)],
+    "02": [("Outillage du carreleur", 21, 21), ("Outillage & machines", 26, 28)],
+    "03": [("Blocs béton, briques & terre cuite", 3, 4),
+           ("Ciments, chaux, plâtres, bétons & mortiers", 5, 6),
+           ("Ferraillage & acier", 7, 7),
+           ("Assainissement, PVC & géotextiles", 22, 22)],
+    "04": [("Toiture, couverture & zinguerie", 10, 10)],
+    "05": [("Isolation", 11, 12)],
+    "06": [("Plaques de plâtre, ossatures & carreaux de plâtre", 13, 14)],
+    "07": [("Carrelage & faïence", 17, 17)],
+    "08": [("Enduits, ragréages & mortiers techniques", 15, 16),
+           ("Colles, joints & accessoires de pose", 18, 20)],
+    "09": [("Peinture & finition", 23, 25)],
+    "10": [("Bois de coffrage, charpente & panneaux", 8, 9), ("Menuiserie", 33, 33)],
+    "11": [("Visserie, fixation & chimie du bâtiment", 29, 30)],
 }
 
-
-def cat_pages_str(a, b):
-    pa, pb = a + CATALOG_OFFSET, b + CATALOG_OFFSET
-    return f"p. {pa}" if a == b else f"p. {pa} – {pb}"
-
+# Pages du catalogue hors familles, conservées en annexes (aucune page supprimée).
+ANNEX_PAGES = [
+    ("Couverture du catalogue d'origine", 1),
+    ("Index du catalogue d'origine", 2),
+    ("Livraison & services", 34),
+    ("Nous trouver", 35),
+    ("Notes", 36),
+    ("4e de couverture du catalogue d'origine", 37),
+]
 
 SERVICES = [
     ("Conseil technique", "Le bon produit et la bonne méthode de pose, expliqués au comptoir."),
@@ -143,6 +130,7 @@ CONTACT = {
 }
 
 FOOTER = "Paris Carrelages & Matériaux  ·  110 rue Édouard Vaillant, 94140 Alfortville  ·  01 43 68 83 80  ·  pariscarrelages.fr"
+FOOTER_SHORT = "Paris Carrelages & Matériaux · Alfortville · 01 43 68 83 80 · pariscarrelages.fr"
 
 
 def wrap(text, font, size, max_w):
@@ -173,9 +161,9 @@ def para(c, text, x, y, max_w, font="Sans", size=10, leading=None, color=INK, al
     return y
 
 
-def eyebrow(c, text, x, y, color=TERRA, size=8.2, spacing=2.6):
+def spaced(c, x, y, text, font="Mono-Bd", size=8.2, spacing=2.6, color=TERRA):
     t = c.beginText(x, y)
-    t.setFont("Mono-Bd", size)
+    t.setFont(font, size)
     t.setFillColor(color)
     t.setCharSpace(spacing)
     t.textOut(text.upper())
@@ -183,8 +171,24 @@ def eyebrow(c, text, x, y, color=TERRA, size=8.2, spacing=2.6):
     c.drawText(t)
 
 
+def eyebrow(c, text, x, y, color=TERRA, size=8.2, spacing=2.6):
+    spaced(c, x, y, text, size=size, spacing=spacing, color=color)
+
+
+def centered_spaced(c, y, label, font="Sans-Bd", size=13, spacing=1.5, color=WHITE, page_w=W):
+    t = c.beginText(0, y)
+    t.setFont(font, size)
+    t.setFillColor(color)
+    t.setCharSpace(spacing)
+    tw = pdfmetrics.stringWidth(label, font, size) + spacing * (len(label) - 1)
+    t.setTextOrigin(page_w / 2 - tw / 2, y)
+    t.textOut(label)
+    t.setCharSpace(0)
+    c.drawText(t)
+
+
 def fill_image(c, path, x, y, w, h):
-    """Scale to fill the frame, center-cropped — jamais déformée."""
+    """Remplit le cadre en recadrant au centre — jamais déformée."""
     img = Image.open(path)
     iw, ih = img.size
     scale = max(w / iw, h / ih)
@@ -231,12 +235,24 @@ class Doc:
     def photo(self, name):
         return f"{self.img_dir}/{name}.jpg"
 
+    def cat(self, page_no):
+        return f"{self.img_dir}/cat_p{page_no}.jpg"
+
     def new_page(self, bg=SAND):
         if self.page:
             self.c.showPage()
+            self.c.setPageSize((W, H))
         self.page += 1
         self.c.setFillColor(bg)
         self.c.rect(0, 0, W, H, stroke=0, fill=1)
+
+    def new_landscape_page(self):
+        if self.page:
+            self.c.showPage()
+        self.c.setPageSize((LW, LH))
+        self.page += 1
+        self.c.setFillColor(SAND)
+        self.c.rect(0, 0, LW, LH, stroke=0, fill=1)
 
     def save(self):
         self.c.save()
@@ -244,7 +260,9 @@ class Doc:
         return self.buf
 
 
-def page_cover(d, doc_label):
+# ---------------------------------------------------------------- pages portrait
+
+def page_cover(d, doc_label, subtitle=None):
     d.new_page(bg=NAVY)
     c = d.c
     fill_image(c, d.photo("cover_herringbone"), 0, 0, W, H)
@@ -263,13 +281,8 @@ def page_cover(d, doc_label):
             "et de rénovation.", 50, 92, 340, font="Sans", size=10.5, leading=15, color=WHITE)
     c.setFillColor(NAVY)
     c.rect(0, 0, W, 40, stroke=0, fill=1)
+    spaced(c, 50, 16, doc_label, size=7.5, spacing=2, color=WHITE)
     c.setFillColor(WHITE)
-    t = c.beginText(50, 16)
-    t.setFont("Mono-Bd", 7.5)
-    t.setCharSpace(2)
-    t.textOut(doc_label.upper())
-    t.setCharSpace(0)
-    c.drawText(t)
     c.setFont("Mono-Bd", 7.5)
     c.drawRightString(W - 50, 16, "PARISCARRELAGES.FR")
 
@@ -296,7 +309,7 @@ def page_presentation(d):
     fill_image(c, d.photo("chantier_echafaudage"), 330, H - 460, W - 330 - 50, 330)
     c.setFillColor(NAVY)
     c.rect(50, 300, W - 100, 110, stroke=0, fill=1)
-    eyebrow(c, "Pros & particuliers · Depuis 2011", 74, 380, color=HexColor("#E9C29F"), size=8)
+    eyebrow(c, "Pros & particuliers · Depuis 2011", 74, 380, color=SAND_SOFT, size=8)
     para(c, "Votre partenaire de proximité pour tous vos projets de construction "
             "et de rénovation.", 74, 352, W - 148, font="Playfair-MdIt", size=15, leading=21, color=WHITE)
     c.setFillColor(WHITE)
@@ -342,21 +355,26 @@ def page_services(d):
     y = top - 3 * (row_h + gap) - 30
     c.setFillColor(NAVY)
     c.rect(50, y - 66, W - 100, 66, stroke=0, fill=1)
-    eyebrow(c, "Disponibilité & devis", 74, y - 26, color=HexColor("#E9C29F"), size=7.5)
+    eyebrow(c, "Disponibilité & devis", 74, y - 26, color=SAND_SOFT, size=7.5)
     para(c, "Devis rapide au comptoir, par téléphone au 01 43 68 83 80 ou par "
             "e-mail à snpariscm@gmail.com.", 74, y - 44, W - 148, size=9.8, leading=14, color=WHITE)
     footer(c, d.page)
 
 
-def page_families_short(d, fams, photo, first_no):
+def family_catalog_names(num):
+    return "  ·  ".join(name for name, _, _ in FAMILY_PAGES[num])
+
+
+def page_families_short(d, fams, photo):
+    """Plaquette courte : 11 familles + infos essentielles du catalogue (sections réelles)."""
     d.new_page()
     c = d.c
-    fill_image(c, d.photo(photo), 50, H - 270, W - 100, 200)
-    eyebrow(c, "Le parcours du chantier", 50, H - 300)
+    fill_image(c, d.photo(photo), 50, H - 262, W - 100, 192)
+    eyebrow(c, "Le parcours du chantier", 50, H - 292)
     c.setFillColor(INK)
     c.setFont("Playfair-Md", 22)
-    c.drawString(50, H - 330, f"Nos familles de produits · {fams[0][0]} à {fams[-1][0]}")
-    y = H - 372
+    c.drawString(50, H - 322, f"Nos familles de produits · {fams[0][0]} à {fams[-1][0]}")
+    y = H - 362
     for num, title, desc, _ in fams:
         c.setFont("Playfair-MdIt", 15)
         c.setFillColor(TERRA)
@@ -364,15 +382,18 @@ def page_families_short(d, fams, photo, first_no):
         c.setFont("Sans-Bd", 12.5)
         c.setFillColor(INK)
         c.drawString(92, y, title)
-        para(c, desc, 92, y - 20, W - 142, size=9.6, leading=13.5, color=SLATE)
+        para(c, desc, 92, y - 20, W - 142, size=9.6, leading=13, color=SLATE)
+        eyebrow(c, "Au catalogue :", 92, y - 48, size=6.4, spacing=1.2, color=STONE)
+        para(c, family_catalog_names(num), 168, y - 48, W - 218, size=8.2, leading=11, color=SLATE)
         c.setStrokeColor(LINE)
         c.setLineWidth(0.6)
-        c.line(92, y - 52, W - 50, y - 52)
-        y -= 78
+        c.line(92, y - 78, W - 50, y - 78)
+        y -= 104
     footer(c, d.page)
 
 
-def page_family_divider(d, fam):
+def page_family_divider(d, fam, ref_start, ref_end):
+    """Plaquette complète : page famille + renvoi précis aux pages de références."""
     num, title, desc, photo = fam
     d.new_page()
     c = d.c
@@ -389,6 +410,7 @@ def page_family_divider(d, fam):
     eyebrow(c, f"Famille {num} / 11", 50, top - 46)
     c.setFillColor(INK)
     c.setFont("Playfair-Md", 27)
+    nlines = 0
     for i, ln in enumerate(wrap(title, "Playfair-Md", 27, W - 100)):
         c.drawString(50, top - 82 - i * 34, ln)
         nlines = i + 1
@@ -396,27 +418,52 @@ def page_family_divider(d, fam):
     c.setStrokeColor(LINE)
     c.setLineWidth(0.6)
     c.line(50, y - 24, W - 50, y - 24)
-    eyebrow(c, "Les références au catalogue général", 50, y - 52, size=7.5)
+    eyebrow(c, f"Les références — pages {ref_start} à {ref_end} de cette plaquette", 50, y - 52, size=7.5)
     yy = y - 76
-    for idx in FAMILY_SECTIONS[num]:
-        name, a, b = CATALOG_SECTIONS[idx]
+    for name, a, b in FAMILY_PAGES[num]:
         c.setFont("Sans-SB", 10)
         c.setFillColor(INK)
         c.drawString(50, yy, f"« {name} »")
-        c.setFont("Mono-Bd", 9)
-        c.setFillColor(TERRA)
-        c.drawRightString(W - 50, yy, cat_pages_str(a, b))
+        c.setFont("Mono", 7.5)
+        c.setFillColor(STONE)
+        orig = f"catalogue d'origine p. {a}" if a == b else f"catalogue d'origine p. {a} à {b}"
+        c.drawRightString(W - 50, yy, orig)
         c.setStrokeColor(LINE)
         c.setLineWidth(0.5)
         c.line(50, yy - 8, W - 50, yy - 8)
         yy -= 26
-    para(c, "Toutes les références, dimensions et conditionnements figurent sur "
-            "ces pages, reprises à l'identique dans la seconde partie de cette plaquette.",
+    para(c, "Toutes les références, dimensions et conditionnements figurent sur les "
+            "pages suivantes, reprises sans modification du catalogue général.",
          50, yy - 6, 400, size=9.2, leading=13.5, color=STONE)
     footer(c, d.page)
 
 
-def page_brands_contact(d, complete=False):
+def page_catalog_reframed(d, orig_page, band_label, section_name):
+    """Page du catalogue d'origine recadrée dans la maquette uniforme (paysage)."""
+    d.new_landscape_page()
+    c = d.c
+    c.setFillColor(NAVY)
+    c.rect(0, LH - 34, LW, 34, stroke=0, fill=1)
+    spaced(c, 24, LH - 22, band_label, size=7.2, spacing=1.6, color=WHITE)
+    c.setFillColor(WHITE)
+    c.setFont("Sans-SB", 10)
+    c.drawRightString(LW - 24, LH - 22, f"« {section_name} »")
+    img = Image.open(d.cat(orig_page))
+    iw, ih = img.size
+    max_w, max_h = LW - 48, LH - 34 - 20 - 24
+    scale = min(max_w / iw, max_h / ih)
+    nw, nh = iw * scale, ih * scale
+    c.drawImage(ImageReader(img), (LW - nw) / 2, 20 + (max_h - nh) / 2, nw, nh)
+    c.setFillColor(NAVY)
+    c.rect(0, 0, LW, 20, stroke=0, fill=1)
+    c.setFillColor(WHITE)
+    c.setFont("Sans", 7)
+    c.drawString(24, 7, f"Catalogue général d'origine, page {orig_page} — reprise sans modification  ·  {FOOTER_SHORT}")
+    c.setFont("Mono", 8)
+    c.drawRightString(LW - 24, 7, f"{d.page:02d}")
+
+
+def page_brands_contact(d):
     d.new_page()
     c = d.c
     eyebrow(c, "Certains de nos fabricants", 50, H - 80)
@@ -433,7 +480,7 @@ def page_brands_contact(d, complete=False):
     block_top = H - 185 - 2 * row_h - 12 - 28
     c.setFillColor(NAVY)
     c.rect(50, 185, W - 100, block_top - 185, stroke=0, fill=1)
-    eyebrow(c, "Passez au comptoir", 74, block_top - 30, color=HexColor("#E9C29F"), size=8.5)
+    eyebrow(c, "Passez au comptoir", 74, block_top - 30, color=SAND_SOFT, size=8.5)
     c.setFont("Playfair-Md", 19)
     c.setFillColor(WHITE)
     c.drawString(74, block_top - 58, "Le comptoir est ouvert dès 6 h 30.")
@@ -444,7 +491,7 @@ def page_brands_contact(d, complete=False):
     c.drawString(74, block_top - 114, CONTACT["web"] + "  ·  " + CONTACT["insta"])
     yy = block_top - 140
     c.setFont("Mono-Bd", 7.2)
-    c.setFillColor(HexColor("#E9C29F"))
+    c.setFillColor(SAND_SOFT)
     c.drawString(74, yy, "HORAIRES")
     c.setFillColor(WHITE)
     for day, hrs in CONTACT["horaires"]:
@@ -455,25 +502,16 @@ def page_brands_contact(d, complete=False):
         c.drawRightString(W - 74, yy, hrs)
     yy -= 26
     c.setFont("Mono-Bd", 7.2)
-    c.setFillColor(HexColor("#E9C29F"))
+    c.setFillColor(SAND_SOFT)
     c.drawString(74, yy, "NOUS LIVRONS")
-    yy = para(c, CONTACT["livraison"], 74, yy - 16, W - 148, size=9.2, leading=13, color=WHITE)
+    para(c, CONTACT["livraison"], 74, yy - 16, W - 148, size=9.2, leading=13, color=WHITE)
     c.setFillColor(TERRA)
     c.rect(50, 128, W - 100, 38, stroke=0, fill=1)
-    c.setFillColor(WHITE)
-    label = "PASSEZ AU COMPTOIR — DEVIS RAPIDE SUR PLACE OU PAR TÉLÉPHONE"
-    t = c.beginText(0, 141)
-    t.setFont("Sans-Bd", 12)
-    t.setCharSpace(1.2)
-    tw = pdfmetrics.stringWidth(label, "Sans-Bd", 12) + 1.2 * (len(label) - 1)
-    t.setTextOrigin(W / 2 - tw / 2, 141)
-    t.textOut(label)
-    t.setCharSpace(0)
-    c.drawText(t)
+    centered_spaced(c, 141, "PASSEZ AU COMPTOIR — DEVIS RAPIDE SUR PLACE OU PAR TÉLÉPHONE", size=12, spacing=1.2)
     footer(c, d.page)
 
 
-def page_sommaire(d, cat_start, contact_page):
+def page_sommaire(d, fam_range, annex_divider, fabricants_page, contact_page):
     d.new_page()
     c = d.c
     eyebrow(c, "Sommaire", 50, H - 80)
@@ -484,12 +522,8 @@ def page_sommaire(d, cat_start, contact_page):
         ("Présentation", "Un seul fournisseur pour tout le chantier", "02"),
         ("Services", "Conseil, stock, showroom, livraison 24 h", "03"),
         ("Le parcours du chantier", "Onze familles, dans l'ordre du chantier", "05"),
-        ("Les 11 familles de produits", "Une page par famille", "06"),
-        ("Fabricants", "Les marques présentes au comptoir", "17"),
-        ("Catalogue général", "Toutes les références, pages d'origine", f"{cat_start:02d}"),
-        ("Contact & horaires", "Passez au comptoir", f"{contact_page:02d}"),
     ]
-    y = H - 176
+    y = H - 172
     for title, sub, no in entries:
         c.setFont("Playfair-Md", 13.5)
         c.setFillColor(INK)
@@ -503,22 +537,42 @@ def page_sommaire(d, cat_start, contact_page):
         c.setStrokeColor(LINE)
         c.line(50, y - 26, 285, y - 26)
         y -= 46
-    # Index précis du catalogue général (colonne droite)
-    x2 = 320
-    eyebrow(c, "Index du catalogue général", x2, H - 176, size=7.5)
-    yy = H - 200
-    for name, a, b in CATALOG_SECTIONS:
-        c.setFont("Sans", 8.8)
+    tail = [
+        ("Annexes du catalogue", "Pages d'origine conservées", f"{annex_divider:02d}"),
+        ("Fabricants", "Les marques présentes au comptoir", f"{fabricants_page:02d}"),
+        ("Contact & horaires", "Passez au comptoir", f"{contact_page:02d}"),
+    ]
+    for title, sub, no in tail:
+        c.setFont("Playfair-Md", 13.5)
         c.setFillColor(INK)
-        label = name if pdfmetrics.stringWidth(name, "Sans", 8.8) <= 185 else name[:44] + "…"
-        c.drawString(x2, yy, label)
+        c.drawString(50, y, title)
+        c.setFont("Sans", 8.8)
+        c.setFillColor(SLATE)
+        c.drawString(50, y - 14, sub)
+        c.setFont("Playfair-MdIt", 13.5)
+        c.setFillColor(TERRA)
+        c.drawRightString(285, y, no)
+        c.setStrokeColor(LINE)
+        c.line(50, y - 26, 285, y - 26)
+        y -= 46
+    x2 = 320
+    eyebrow(c, "Les 11 familles & leurs références", x2, H - 172, size=7.5)
+    yy = H - 196
+    for num, title, _, _ in FAMILIES:
+        a, b = fam_range[num]
+        c.setFont("Sans-SB", 9.2)
+        c.setFillColor(INK)
+        c.drawString(x2, yy, f"{num} · {title}")
         c.setFont("Mono", 8)
         c.setFillColor(TERRA)
-        c.drawRightString(W - 50, yy, cat_pages_str(a, b).replace("p. ", ""))
+        c.drawRightString(W - 50, yy, f"p. {a:02d} – {b:02d}")
         c.setStrokeColor(LINE)
         c.setLineWidth(0.4)
-        c.line(x2, yy - 6.5, W - 50, yy - 6.5)
-        yy -= 21.5
+        c.line(x2, yy - 7, W - 50, yy - 7)
+        yy -= 24
+    para(c, "Le catalogue général est réorganisé sous ces onze familles : chaque page "
+            "de références est reprise sans modification dans la maquette de cette "
+            "plaquette.", x2, yy - 10, W - 50 - x2, size=8.6, leading=12.5, color=SLATE)
     footer(c, d.page)
 
 
@@ -552,29 +606,31 @@ def page_parcours(d):
     footer(c, d.page)
 
 
-def page_catalog_divider(d, cat_pages):
+def page_annex_divider(d, annex_pages_start):
     d.new_page(bg=NAVY)
     c = d.c
     logo_box(c, 50, H - 150, 150, variant="white")
-    eyebrow(c, "Seconde partie", 50, H - 240, color=HexColor("#E9C29F"))
+    eyebrow(c, "Annexes", 50, H - 240, color=SAND_SOFT)
     c.setFillColor(WHITE)
     c.setFont("Playfair-Md", 34)
-    c.drawString(50, H - 288, "Catalogue général.")
-    para(c, f"Les {cat_pages} pages du catalogue général sont reprises en "
-            "intégralité dans les pages suivantes, telles qu'éditées : aucune "
-            "référence supprimée, aucune page retirée.",
-         50, H - 330, 420, size=11, leading=17, color=HexColor("#DCE6EE"))
-    para(c, "Ciments, chaux, plâtres, bétons & mortiers — et l'ensemble des "
-            "familles du parcours du chantier, avec conditionnements et marques.",
-         50, H - 400, 420, size=10, leading=15, color=HexColor("#9FB4C6"))
-    fill_image(c, d.photo("maison_chantier"), 50, 120, W - 100, 300)
-    c.setFillColor(WHITE)
-    t = c.beginText(50, 84)
-    t.setFont("Mono-Bd", 7.5)
-    t.setCharSpace(2)
-    t.textOut("CATALOGUE GÉNÉRAL — PAGES D'ORIGINE REPRISES SANS MODIFICATION")
-    t.setCharSpace(0)
-    c.drawText(t)
+    c.drawString(50, H - 288, "Pages d'origine du catalogue.")
+    para(c, "Les pages d'information générale du catalogue d'origine sont conservées "
+            "ici, sans modification : couverture, index, livraison & services, "
+            "coordonnées et page de notes.", 50, H - 330, 420, size=11, leading=17,
+         color=HexColor("#DCE6EE"))
+    yy = H - 420
+    for name, p in ANNEX_PAGES:
+        c.setFont("Sans-SB", 10.5)
+        c.setFillColor(WHITE)
+        c.drawString(50, yy, name)
+        c.setFont("Mono", 8)
+        c.setFillColor(SAND_SOFT)
+        c.drawRightString(W - 50, yy, f"catalogue d'origine p. {p} · plaquette p. {annex_pages_start + ANNEX_PAGES.index((name, p)):02d}")
+        c.setStrokeColor(HexColor("#17486F"))
+        c.setLineWidth(0.6)
+        c.line(50, yy - 9, W - 50, yy - 9)
+        yy -= 30
+    fill_image(c, d.photo("maison_chantier"), 50, 60, W - 100, 200)
 
 
 def page_contact_final(d):
@@ -620,22 +676,13 @@ def page_contact_final(d):
     para(c, CONTACT["pour_qui"], 74, 154, W - 148, size=9.4, leading=13.5, color=SLATE)
     c.setFillColor(TERRA)
     c.rect(50, 74, W - 100, 38, stroke=0, fill=1)
-    c.setFillColor(WHITE)
-    c.setFont("Sans-Bd", 13)
-    label = "PASSEZ AU COMPTOIR"
-    t = c.beginText(0, 100)
-    t.setFont("Sans-Bd", 13)
-    t.setCharSpace(1.5)
-    tw = pdfmetrics.stringWidth(label, "Sans-Bd", 13) + 1.5 * (len(label) - 1)
-    t.setTextOrigin(W / 2 - tw / 2, 87)
-    t.textOut(label)
-    t.setCharSpace(0)
-    c.drawText(t)
+    centered_spaced(c, 87, "PASSEZ AU COMPTOIR", size=13, spacing=1.5)
     footer(c, d.page)
 
 
-def prep_images(quality, max_dim):
-    """Photos en JPEG (pas de déformation), logo et bandeaux en PNG d'origine."""
+# ---------------------------------------------------------------- construction
+
+def prep_images(quality):
     out = f"/tmp/pcm_imgs_{quality}"
     os.makedirs(out, exist_ok=True)
     names = ["cover_herringbone", "chantier_echafaudage", "isolation_mur", "peinture_rouleaux",
@@ -652,6 +699,21 @@ def prep_images(quality, max_dim):
     return out
 
 
+def render_catalog(quality):
+    """Rend chaque page du catalogue d'origine en image HD (contenu inchangé)."""
+    out = f"/tmp/pcm_imgs_{quality}"
+    dpi, q = (150, 85) if quality == "hq" else (100, 65)
+    doc = pymupdf.open(f"{SRC}/catalogue_pcm.pdf")
+    for i in range(doc.page_count):
+        path = f"{out}/cat_p{i+1}.jpg"
+        if os.path.exists(path):
+            continue
+        pix = doc[i].get_pixmap(dpi=dpi)
+        img = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+        img.save(path, quality=q, optimize=True)
+    doc.close()
+
+
 def build_short(img_dir):
     d = Doc(img_dir)
     page_cover(d, "Plaquette commerciale · Alfortville")
@@ -660,39 +722,43 @@ def build_short(img_dir):
     groups = [(FAMILIES[0:3], "ouvrier_chantier"), (FAMILIES[3:6], "isolation_mur"),
               (FAMILIES[6:8], "carrelage_marbre"), (FAMILIES[8:11], "peinture_rouleaux")]
     for fams, photo in groups:
-        page_families_short(d, fams, photo, fams[0][0])
+        page_families_short(d, fams, photo)
     page_brands_contact(d)
     return d.save()
 
 
-def build_complete_front(img_dir, cat_pages):
+def build_complete(img_dir):
     d = Doc(img_dir)
-    page_cover(d, "Plaquette complète & catalogue général")
+    fam_refs = {num: [p for _, a, b in FAMILY_PAGES[num] for p in range(a, b + 1)]
+                for num, _, _, _ in FAMILIES}
+    fam_range, cursor = {}, 6
+    for num, _, _, _ in FAMILIES:
+        fam_range[num] = (cursor, cursor + len(fam_refs[num]))
+        cursor += len(fam_refs[num]) + 1
+    annex_divider = cursor
+    annex_start = cursor + 1
+    fabricants_page = annex_start + len(ANNEX_PAGES)
+    contact_page = fabricants_page + 1
+
+    page_cover(d, "Plaquette complète · présentation & catalogue réorganisé")
     page_presentation(d)
     page_services(d)
-    contact_page = 18 + cat_pages + 1
-    page_sommaire(d, cat_start=19, contact_page=contact_page)
+    page_sommaire(d, fam_range, annex_divider, fabricants_page, contact_page)
     page_parcours(d)
     for fam in FAMILIES:
-        page_family_divider(d, fam)
-    page_brands_contact(d, complete=True)
-    page_catalog_divider(d, cat_pages)
-    return d
-
-
-def build_complete_back(img_dir):
-    d = Doc(img_dir)
+        num = fam[0]
+        a, b = fam_range[num]
+        page_family_divider(d, fam, a + 1, b)
+        for orig_page in fam_refs[num]:
+            section = next(n for n, x, y in FAMILY_PAGES[num] if x <= orig_page <= y)
+            page_catalog_reframed(d, orig_page,
+                                  f"Famille {num} · {fam[1]}", section)
+    page_annex_divider(d, annex_start)
+    for name, p in ANNEX_PAGES:
+        page_catalog_reframed(d, p, "Annexe · catalogue d'origine", name)
+    page_brands_contact(d)
     page_contact_final(d)
     return d.save()
-
-
-def merge(front_buf, catalog_path, back_buf, out_path):
-    w = PdfWriter()
-    w.append(PdfReader(front_buf))
-    w.append(PdfReader(catalog_path))
-    w.append(PdfReader(back_buf))
-    with open(out_path, "wb") as f:
-        w.write(f)
 
 
 def compress_email(src, dst):
@@ -706,43 +772,35 @@ def compress_email(src, dst):
 
 
 def main():
-    catalog = f"{SRC}/catalogue_pcm.pdf"
-    cat_pages = PdfReader(catalog).get_num_pages()
-    print("pages catalogue:", cat_pages)
-
+    import shutil
+    shutil.rmtree("/tmp/pcm_imgs_hq", ignore_errors=True)
+    shutil.rmtree("/tmp/pcm_imgs_email", ignore_errors=True)
     for quality, suffix in [("hq", ""), ("email", "_Email")]:
-        img_dir = prep_images(quality, 2200 if quality == "hq" else 1100)
+        img_dir = prep_images(quality)
+        render_catalog(quality)
 
         short = build_short(img_dir)
-        short_path = f"{OUT}/Paris_Carrelages_Materiaux_Plaquette_Courte{suffix}.pdf"
-        with open(short_path, "wb") as f:
+        with open(f"{OUT}/PCM_Plaquette_Courte_Fusionnee{suffix}.pdf", "wb") as f:
             f.write(short.getvalue())
 
-        front = build_complete_front(img_dir, cat_pages)
-        back = build_complete_back(img_dir)
-        complete_path = f"{OUT}/Paris_Carrelages_Materiaux_Plaquette_Complete{suffix}.pdf"
-        merge(front.save(), catalog, back, complete_path)
-
-        if quality == "hq":
-            compress_email(short_path, f"{OUT}/tmp_short_email.pdf")
-            compress_email(complete_path, f"{OUT}/tmp_complete_email.pdf")
-
+        complete = build_complete(img_dir)
+        with open(f"{OUT}/PCM_Plaquette_Complete_Fusionnee{suffix}.pdf", "wb") as f:
+            f.write(complete.getvalue())
         print(quality, "ok")
 
-    # La compression pymupdf des versions HQ génère les variantes e-mail des pages
-    # fusionnées ; on conserve les versions reconstruites (images déjà optimisées)
-    # si plus légères.
-    for base, tmp in [("Paris_Carrelages_Materiaux_Plaquette_Courte", "tmp_short_email.pdf"),
-                      ("Paris_Carrelages_Materiaux_Plaquette_Complete", "tmp_complete_email.pdf")]:
-        rebuilt = f"{OUT}/{base}_Email.pdf"
-        compressed = f"{OUT}/{tmp}"
-        if os.path.exists(compressed) and os.path.getsize(compressed) < os.path.getsize(rebuilt):
-            os.replace(compressed, rebuilt)
-        elif os.path.exists(compressed):
-            os.remove(compressed)
+    # Passe de compression finale sur les versions e-mail (images ré-échantillonnées).
+    for base in ["PCM_Plaquette_Courte_Fusionnee", "PCM_Plaquette_Complete_Fusionnee"]:
+        p = f"{OUT}/{base}_Email.pdf"
+        tmp = f"{OUT}/_tmp_email.pdf"
+        compress_email(p, tmp)
+        if os.path.getsize(tmp) < os.path.getsize(p):
+            os.replace(tmp, p)
+        else:
+            os.remove(tmp)
 
     for f in sorted(os.listdir(OUT)):
-        print(f, f"{os.path.getsize(f'{OUT}/{f}') / 1e6:.1f} Mo")
+        if f.startswith("PCM_"):
+            print(f, f"{os.path.getsize(f'{OUT}/{f}') / 1e6:.1f} Mo")
 
 
 if __name__ == "__main__":

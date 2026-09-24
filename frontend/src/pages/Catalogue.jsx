@@ -5,7 +5,7 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { ChevronLeft, ChevronRight, Download, ZoomIn, ZoomOut } from "lucide-react";
 import { Reveal } from "../components/Reveal";
-import { CATALOGUE_SECTIONS, DOWNLOADS } from "../data/content";
+import { CATALOGUE_SECTIONS, DOWNLOADS, SOURCES } from "../data/content";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -13,10 +13,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 const DOCS = [
-  { id: "courte", label: "Plaquette courte", file: "/documents/Paris_Carrelages_Materiaux_Plaquette_Courte.pdf" },
-  { id: "complete", label: "Plaquette complète", file: "/documents/Paris_Carrelages_Materiaux_Plaquette_Complete.pdf" },
-  { id: "catalogue", label: "Catalogue général (original)", file: "/documents/Catalogue_General_PCM.pdf" },
-  { id: "magazine", label: "Le Magazine (original)", file: "/documents/Ebauche_Magazine_PCM.pdf" },
+  { id: "courte", label: "Plaquette courte (fusionnée)", file: "/documents/PCM_Plaquette_Courte_Fusionnee.pdf" },
+  { id: "complete", label: "Plaquette complète (fusionnée)", file: "/documents/PCM_Plaquette_Complete_Fusionnee.pdf" },
+  { id: "catalogue", label: "Catalogue général (source)", file: "/documents/Catalogue_General_PCM.pdf" },
+  { id: "magazine", label: "Le Magazine (source)", file: "/documents/Ebauche_Magazine_PCM.pdf" },
 ];
 
 const Catalogue = () => {
@@ -167,8 +167,8 @@ const Catalogue = () => {
       <section className="border-t border-line bg-white py-16" data-testid="catalogue-downloads">
         <div className="container-pcm">
           <h2 className="font-display text-2xl font-medium text-ink sm:text-3xl">Tous les téléchargements</h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {DOWNLOADS.map((d) => (
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {[...DOWNLOADS, ...SOURCES].map((d) => (
               <a
                 key={d.id}
                 href={d.href}

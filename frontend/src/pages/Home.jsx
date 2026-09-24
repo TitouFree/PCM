@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowRight, Download, FileText, Phone } from "lucide-react";
 import { MaskedLine, Reveal } from "../components/Reveal";
 import { Marquee } from "../components/Marquee";
-import { COMPANY, DOWNLOADS, FAMILIES } from "../data/content";
+import { COMPANY, DOWNLOADS, FAMILIES, SOURCES } from "../data/content";
 
 const STATS = [
   { value: "2011", label: "Négoce indépendant" },
@@ -95,35 +95,30 @@ const Hero = ({ onDevis }) => {
 const Downloads = () => (
   <section id="telechargements" className="container-pcm py-20 sm:py-28" data-testid="downloads-section">
     <Reveal>
-      <p className="eyebrow">Documents officiels</p>
+      <p className="eyebrow">Les nouvelles plaquettes</p>
       <h2 className="mt-3 max-w-2xl font-display text-3xl font-medium leading-tight text-ink sm:text-5xl">
-        Deux plaquettes, un catalogue. <span className="italic text-terra">À emporter.</span>
+        Deux plaquettes fusionnées, <span className="italic text-terra">une seule identité.</span>
       </h2>
       <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate">
-        La plaquette courte pour la prospection et les rendez-vous, la plaquette
-        complète avec toutes les références du catalogue général, et le catalogue
-        d'origine. Versions haute qualité pour l'impression, versions allégées pour l'e-mail.
+        Deux documents entièrement recomposés à partir du Magazine et du catalogue
+        général : même maquette, mêmes couleurs, même pagination. La version
+        complète réorganise toutes les références du catalogue sous les 11 familles
+        du parcours du chantier.
       </p>
     </Reveal>
-    <div className="mt-12 grid gap-6 lg:grid-cols-12">
+    <div className="mt-12 grid gap-6 lg:grid-cols-2">
       {DOWNLOADS.map((d, i) => (
-        <Reveal
-          key={d.id}
-          delay={i * 0.12}
-          className={i === 0 ? "lg:col-span-5" : i === 1 ? "lg:col-span-7" : "lg:col-span-12"}
-        >
+        <Reveal key={d.id} delay={i * 0.12}>
           <article
             data-testid={`download-card-${d.id}`}
-            className={`group flex h-full flex-col justify-between border border-line bg-white p-7 transition-all duration-500 hover:-translate-y-1 hover:border-terra/50 hover:shadow-[0_24px_60px_-24px_rgba(13,58,92,0.35)] sm:p-9 ${
-              i === 2 ? "lg:flex-row lg:items-center lg:gap-10" : ""
-            }`}
+            className="group flex h-full flex-col justify-between border border-line bg-white p-7 transition-all duration-500 hover:-translate-y-1 hover:border-terra/50 hover:shadow-[0_24px_60px_-24px_rgba(13,58,92,0.35)] sm:p-9"
           >
             <div className="flex-1">
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center bg-navy text-sand">
                   <FileText size={18} />
                 </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone">PDF · A4</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone">PDF · A4 · Nouveau</span>
               </div>
               <h3 className="mt-5 font-display text-2xl font-medium text-ink">{d.title}</h3>
               <p className="mt-1 text-sm font-semibold text-terra">{d.subtitle}</p>
@@ -138,30 +133,46 @@ const Downloads = () => (
               >
                 <Download size={14} /> Haute qualité · {d.size}
               </a>
-              {d.emailHref && (
-                <a
-                  href={d.emailHref}
-                  download
-                  data-testid={`download-${d.id}-email`}
-                  className="flex items-center gap-2 border border-navy/25 px-5 py-3 text-xs font-bold uppercase tracking-wider text-navy transition-colors duration-300 hover:border-navy hover:bg-navy hover:text-sand"
-                >
-                  <Download size={14} /> E-mail · {d.emailSize}
-                </a>
-              )}
-              {d.id === "catalogue" && (
-                <Link
-                  to="/catalogue"
-                  data-testid="download-catalogue-view"
-                  className="flex items-center gap-2 border border-navy/25 px-5 py-3 text-xs font-bold uppercase tracking-wider text-navy transition-colors duration-300 hover:border-navy hover:bg-navy hover:text-sand"
-                >
-                  Consulter en ligne
-                </Link>
-              )}
+              <a
+                href={d.emailHref}
+                download
+                data-testid={`download-${d.id}-email`}
+                className="flex items-center gap-2 border border-navy/25 px-5 py-3 text-xs font-bold uppercase tracking-wider text-navy transition-colors duration-300 hover:border-navy hover:bg-navy hover:text-sand"
+              >
+                <Download size={14} /> E-mail · {d.emailSize}
+              </a>
+              <Link
+                to={`/catalogue?doc=${d.id}`}
+                data-testid={`download-${d.id}-view`}
+                className="flex items-center gap-2 border border-terra/50 px-5 py-3 text-xs font-bold uppercase tracking-wider text-terra transition-colors duration-300 hover:bg-terra hover:text-white"
+              >
+                Feuilleter en ligne
+              </Link>
             </div>
           </article>
         </Reveal>
       ))}
     </div>
+    <Reveal delay={0.15}>
+      <div className="mt-6 border border-dashed border-line bg-sand p-6 sm:p-7" data-testid="sources-block">
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-stone">
+          Documents sources — les deux PDF d'origine, conservés séparément
+        </p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          {SOURCES.map((s) => (
+            <a
+              key={s.id}
+              href={s.href}
+              download
+              data-testid={`download-source-${s.id}`}
+              className="flex items-center gap-2 border border-line bg-white px-4 py-2.5 text-xs font-semibold text-slate transition-colors duration-300 hover:border-navy hover:text-navy"
+            >
+              <Download size={13} /> {s.title} · {s.subtitle} · {s.size}
+            </a>
+          ))}
+        </div>
+      </div>
+    </Reveal>
   </section>
 );
 

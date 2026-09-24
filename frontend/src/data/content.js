@@ -84,31 +84,40 @@ export const CATALOGUE_SECTIONS = [
 export const DOWNLOADS = [
   {
     id: "courte",
-    title: "Plaquette courte",
-    subtitle: "Présentation commerciale · 8 pages A4",
-    detail: "Prospection, rendez-vous, impression.",
-    href: "/documents/Paris_Carrelages_Materiaux_Plaquette_Courte.pdf",
-    emailHref: "/documents/Paris_Carrelages_Materiaux_Plaquette_Courte_Email.pdf",
+    title: "Plaquette courte fusionnée",
+    subtitle: "Nouvelle composition · 8 pages A4",
+    detail: "Présentation du négoce, services, showroom et les 11 familles avec leurs sections du catalogue. Pour la prospection, l'impression et l'e-mail.",
+    href: "/documents/PCM_Plaquette_Courte_Fusionnee.pdf",
+    emailHref: "/documents/PCM_Plaquette_Courte_Fusionnee_Email.pdf",
     size: "13 Mo",
-    emailSize: "0,8 Mo",
+    emailSize: "0,5 Mo",
   },
   {
     id: "complete",
-    title: "Plaquette complète",
-    subtitle: "Présentation + catalogue général · 56 pages",
-    detail: "Toutes les références du catalogue, pages d'origine reprises sans modification.",
-    href: "/documents/Paris_Carrelages_Materiaux_Plaquette_Complete.pdf",
-    emailHref: "/documents/Paris_Carrelages_Materiaux_Plaquette_Complete_Email.pdf",
-    size: "51 Mo",
-    emailSize: "20 Mo",
+    title: "Plaquette complète fusionnée",
+    subtitle: "Nouvelle composition · 56 pages",
+    detail: "Présentation + catalogue général réorganisé sous les 11 familles : toutes les références, conditionnements et marques, recadrés dans la maquette PCM.",
+    href: "/documents/PCM_Plaquette_Complete_Fusionnee.pdf",
+    emailHref: "/documents/PCM_Plaquette_Complete_Fusionnee_Email.pdf",
+    size: "56 Mo",
+    emailSize: "3,8 Mo",
   },
+];
+
+export const SOURCES = [
   {
     id: "catalogue",
-    title: "Catalogue général",
-    subtitle: "Le catalogue d'origine · 37 pages",
-    detail: "Références, conditionnements et marques.",
+    title: "Catalogue général (source)",
+    subtitle: "Document d'origine · 37 pages",
     href: "/documents/Catalogue_General_PCM.pdf",
     size: "31,5 Mo",
+  },
+  {
+    id: "magazine",
+    title: "Le Magazine (source)",
+    subtitle: "Ébauche d'origine · 4 pages",
+    href: "/documents/Ebauche_Magazine_PCM.pdf",
+    size: "8,1 Mo",
   },
 ];
 

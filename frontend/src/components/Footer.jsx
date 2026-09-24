@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Phone } from "lucide-react";
-import { COMPANY, DOWNLOADS, HOURS } from "../data/content";
+import { COMPANY, DOWNLOADS, HOURS, SOURCES } from "../data/content";
 
 export const Footer = () => (
   <footer className="relative overflow-hidden bg-navy text-sand grain" data-testid="footer">
@@ -54,6 +54,13 @@ export const Footer = () => (
             <li key={d.id}>
               <a href={d.href} download data-testid={`footer-download-${d.id}`} className="link-underline text-sand/80 transition-colors hover:text-white">
                 {d.title}
+              </a>
+            </li>
+          ))}
+          {SOURCES.map((s) => (
+            <li key={s.id}>
+              <a href={s.href} download data-testid={`footer-source-${s.id}`} className="link-underline text-sand/50 transition-colors hover:text-white">
+                {s.title}
               </a>
             </li>
           ))}
