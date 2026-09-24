@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalogue &amp; documents — Paris Carrelages et Matériaux</title>
+<meta name="description" content="Consultez et téléchargez les plaquettes et le catalogue général de Paris Carrelages et Matériaux : références, conditionnements, marques.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo_navy_white.png" alt="Paris Carrelages et Matériaux"></a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="entreprise.html">L'Entreprise</a>
+      <a href="parcours.html">Parcours du chantier</a>
+      <a href="catalogue.html" class="active">Catalogue</a>
+      <a href="fabricants.html">Fabricants</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-outline-navy" href="tel:+33143688380">01 43 68 83 80</a>
+      <button class="btn btn-terra" data-open-devis type="button">Demander un devis</button>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="nav-mobile" id="navMobile">
+    <div class="container">
+      <a href="index.html">Accueil</a>
+      <a href="entreprise.html">L'Entreprise</a>
+      <a href="parcours.html">Parcours du chantier</a>
+      <a href="catalogue.html" class="active">Catalogue</a>
+      <a href="fabricants.html">Fabricants</a>
+      <a href="contact.html">Contact</a>
+      <button class="btn btn-terra" data-open-devis type="button">Demander un devis</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="page-hero grain">
+    <div class="container">
+      <p class="eyebrow-light">Catalogue &amp; documents</p>
+      <h1>Consultez, zoomez, <em>téléchargez.</em></h1>
+      <p class="lead">La visionneuse reprend les documents officiels page par page, sans aucune modification. Les références, conditionnements et marques sont ceux du catalogue général d'origine.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:48px">
+    <div class="container">
+      <div class="doc-tabs reveal" role="tablist" aria-label="Choisir un document">
+        <button class="doc-tab" data-doc="courte" type="button">Plaquette courte</button>
+        <button class="doc-tab" data-doc="complete" type="button">Plaquette complète</button>
+        <button class="doc-tab" data-doc="catalogue" type="button">Catalogue général (source)</button>
+        <button class="doc-tab" data-doc="magazine" type="button">Le Magazine (source)</button>
+      </div>
+
+      <div class="viewer-bar reveal reveal-d1">
+        <div class="viewer-nav">
+          <button class="viewer-btn" id="viewerPrev" type="button" aria-label="Page précédente">←</button>
+          <span class="viewer-indicator" id="viewerIndicator">Page 1</span>
+          <button class="viewer-btn" id="viewerNext" type="button" aria-label="Page suivante">→</button>
+        </div>
+        <div class="viewer-zoom">
+          <button class="viewer-btn" id="zoomOut" type="button" aria-label="Zoom arrière">−</button>
+          <span class="viewer-indicator" id="viewerZoom">100 %</span>
+          <button class="viewer-btn" id="zoomIn" type="button" aria-label="Zoom avant">+</button>
+          <a class="btn btn-outline-navy" id="viewerOpenRaw" href="documents/Catalogue_General_PCM.pdf" target="_blank" rel="noopener" style="padding:9px 14px">Ouvrir le PDF</a>
+        </div>
+      </div>
+
+      <div class="viewer-frame-wrap reveal reveal-d2">
+        <iframe class="viewer-frame" id="pdfFrame" src="documents/Catalogue_General_PCM.pdf" title="Visionneuse PDF — catalogue et plaquettes PCM"></iframe>
+        <p class="viewer-note">La navigation page par page et le zoom utilisent le lecteur PDF de votre navigateur. Sur mobile, utilisez « Ouvrir le PDF » pour une lecture plein écran.</p>
+      </div>
+
+      <div class="cat-index reveal" id="catIndex">
+        <p class="eyebrow">Accès direct par section — catalogue général</p>
+        <div class="cat-index-grid">
+          <button class="cat-jump" data-page="3" type="button"><b>Blocs béton, briques &amp; terre cuite</b><span>p. 3</span></button>
+          <button class="cat-jump" data-page="5" type="button"><b>Ciments, chaux, plâtres, bétons &amp; mortiers</b><span>p. 5</span></button>
+          <button class="cat-jump" data-page="7" type="button"><b>Ferraillage &amp; acier</b><span>p. 7</span></button>
+          <button class="cat-jump" data-page="8" type="button"><b>Bois de coffrage, charpente &amp; panneaux</b><span>p. 8</span></button>
+          <button class="cat-jump" data-page="10" type="button"><b>Toiture, couverture &amp; zinguerie</b><span>p. 10</span></button>
+          <button class="cat-jump" data-page="11" type="button"><b>Isolation</b><span>p. 11</span></button>
+          <button class="cat-jump" data-page="13" type="button"><b>Plaques de plâtre, ossatures &amp; carreaux de plâtre</b><span>p. 13</span></button>
+          <button class="cat-jump" data-page="15" type="button"><b>Enduits, ragréages &amp; mortiers techniques</b><span>p. 15</span></button>
+          <button class="cat-jump" data-page="17" type="button"><b>Carrelage &amp; faïence</b><span>p. 17</span></button>
+          <button class="cat-jump" data-page="18" type="button"><b>Colles, joints &amp; accessoires de pose</b><span>p. 18</span></button>
+          <button class="cat-jump" data-page="21" type="button"><b>Outillage du carreleur</b><span>p. 21</span></button>
+          <button class="cat-jump" data-page="22" type="button"><b>Assainissement, PVC &amp; géotextiles</b><span>p. 22</span></button>
+          <button class="cat-jump" data-page="23" type="button"><b>Peinture &amp; finition</b><span>p. 23</span></button>
+          <button class="cat-jump" data-page="26" type="button"><b>Outillage &amp; machines</b><span>p. 26</span></button>
+          <button class="cat-jump" data-page="29" type="button"><b>Visserie, fixation &amp; chimie du bâtiment</b><span>p. 29</span></button>
+          <button class="cat-jump" data-page="31" type="button"><b>Installation de chantier, protection &amp; EPI</b><span>p. 31</span></button>
+          <button class="cat-jump" data-page="33" type="button"><b>Menuiserie</b><span>p. 33</span></button>
+          <button class="cat-jump" data-page="34" type="button"><b>Livraison &amp; services</b><span>p. 34</span></button>
+        </div>
+      </div>
+
+      <p class="viewer-note reveal" style="margin-top:22px;max-width:760px">La recherche par référence n'est pas proposée : les pages du catalogue d'origine sont des visuels non indexables, et nous préférons ne pas risquer d'afficher une référence erronée. Pour toute référence, appelez le 01 43 68 83 80 — le comptoir vous répond.</p>
+    </div>
+  </section>
+
+  <section class="section section-white">
+    <div class="container">
+      <h2 class="h2 reveal">Tous les téléchargements</h2>
+      <div class="dl-grid" style="margin-top:32px">
+        <article class="dl-card reveal">
+          <div>
+            <h3>Plaquette courte</h3>
+            <p class="sub">Nouvelle composition · 8 pages A4</p>
+          </div>
+          <div class="dl-actions">
+            <a class="btn btn-navy" href="documents/PCM_Plaquette_Courte.pdf" download>↓ Haute qualité · 13 Mo</a>
+            <a class="btn btn-outline-navy" href="documents/PCM_Plaquette_Courte_Email.pdf" download>↓ E-mail · 0,5 Mo</a>
+          </div>
+        </article>
+        <article class="dl-card reveal reveal-d1">
+          <div>
+            <h3>Plaquette complète</h3>
+            <p class="sub">Nouvelle composition · 56 pages</p>
+          </div>
+          <div class="dl-actions">
+            <a class="btn btn-navy" href="documents/PCM_Plaquette_Complete.pdf" download>↓ Haute qualité · 56 Mo</a>
+            <a class="btn btn-outline-navy" href="documents/PCM_Plaquette_Complete_Email.pdf" download>↓ E-mail · 3,8 Mo</a>
+          </div>
+        </article>
+        <article class="dl-card reveal">
+          <div>
+            <h3>Catalogue général (source)</h3>
+            <p class="sub">Document d'origine · 37 pages</p>
+          </div>
+          <div class="dl-actions">
+            <a class="btn btn-outline-navy" href="documents/Catalogue_General_PCM.pdf" download>↓ Télécharger · 31,5 Mo</a>
+          </div>
+        </article>
+        <article class="dl-card reveal reveal-d1">
+          <div>
+            <h3>Le Magazine (source)</h3>
+            <p class="sub">Ébauche d'origine · 4 pages</p>
+          </div>
+          <div class="dl-actions">
+            <a class="btn btn-outline-navy" href="documents/Ebauche_Magazine_PCM.pdf" download>↓ Télécharger · 8,1 Mo</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer grain">
+  <div class="container footer-grid">
+    <div>
+      <span class="footer-logo"><img src="assets/logo_navy_white.png" alt="Paris Carrelages et Matériaux"></span>
+      <p class="tagline">Des fondations aux finitions.</p>
+      <p class="hook">Votre partenaire de proximité pour tous vos projets de construction et de rénovation.</p>
+      <p class="since">Négoce indépendant · Alfortville (94) · Depuis 2011</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li>110 rue Édouard Vaillant<br>94140 Alfortville</li>
+        <li><a href="tel:+33143688380">01 43 68 83 80</a></li>
+        <li><a href="mailto:snpariscm@gmail.com">snpariscm@gmail.com</a></li>
+        <li><a href="https://www.instagram.com/pariscarrelages" target="_blank" rel="noopener">Instagram @pariscarrelages</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Horaires</h4>
+      <ul>
+        <li><b>Lundi – Jeudi</b>6 h 30 – 18 h (pause 12 h – 13 h)</li>
+        <li><b>Vendredi</b>6 h 30 – 17 h (pause 12 h – 13 h)</li>
+        <li><b>Samedi</b>8 h – 12 h</li>
+        <li><b>Dimanche</b>Fermé</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Documents</h4>
+      <ul>
+        <li><a href="documents/PCM_Plaquette_Courte.pdf" download>Plaquette courte</a></li>
+        <li><a href="documents/PCM_Plaquette_Complete.pdf" download>Plaquette complète</a></li>
+        <li><a href="documents/Catalogue_General_PCM.pdf" download>Catalogue général (source)</a></li>
+        <li><a href="documents/Ebauche_Magazine_PCM.pdf" download>Le Magazine (source)</a></li>
+        <li><a href="catalogue.html">Consulter en ligne</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <span>© 2026 Paris Carrelages et Matériaux</span>
+    <span>pariscarrelages.fr</span>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="devisModal" role="dialog" aria-modal="true" aria-label="Demande de devis">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow">Devis</p>
+        <h3>Demander un devis</h3>
+        <p class="hint">Votre logiciel e-mail s'ouvre avec votre demande pré-remplie, adressée à snpariscm@gmail.com. Ou appelez le 01 43 68 83 80.</p>
+      </div>
+      <button class="modal-close" id="devisClose" type="button" aria-label="Fermer">✕</button>
+    </div>
+    <form class="form-grid" id="devisForm">
+      <div class="field"><label for="dNom">Nom *</label><input id="dNom" required placeholder="Votre nom"></div>
+      <div class="field"><label for="dProfil">Vous êtes</label><select id="dProfil"><option>Professionnel</option><option>Particulier</option></select></div>
+      <div class="field"><label for="dTel">Téléphone *</label><input id="dTel" type="tel" required placeholder="06 …"></div>
+      <div class="field"><label for="dEmail">E-mail *</label><input id="dEmail" type="email" required placeholder="vous@exemple.fr"></div>
+      <div class="field full"><label>Familles concernées</label>
+        <div class="chips">
+          <button type="button" class="chip" data-value="Installation &amp; protection">01 · Installation &amp; protection</button>
+          <button type="button" class="chip" data-value="Machines &amp; outillage">02 · Machines &amp; outillage</button>
+          <button type="button" class="chip" data-value="Gros œuvre &amp; maçonnerie">03 · Gros œuvre</button>
+          <button type="button" class="chip" data-value="Toiture &amp; couverture">04 · Toiture</button>
+          <button type="button" class="chip" data-value="Isolation">05 · Isolation</button>
+          <button type="button" class="chip" data-value="Plâtrerie &amp; cloisons">06 · Plâtrerie</button>
+          <button type="button" class="chip" data-value="Carrelage &amp; faïence">07 · Carrelage</button>
+          <button type="button" class="chip" data-value="Colles, joints &amp; ragréage">08 · Colles &amp; ragréage</button>
+          <button type="button" class="chip" data-value="Peinture">09 · Peinture</button>
+          <button type="button" class="chip" data-value="Menuiserie">10 · Menuiserie</button>
+          <button type="button" class="chip" data-value="Quincaillerie &amp; accessoires">11 · Quincaillerie</button>
+        </div>
+      </div>
+      <div class="field"><label for="dAdresse">Adresse du chantier</label><input id="dAdresse" placeholder="Commune, code postal"></div>
+      <div class="field"><label for="dDelai">Délai souhaité</label><input id="dDelai" placeholder="Ex. semaine prochaine"></div>
+      <div class="field full"><label for="dMessage">Votre besoin *</label><textarea id="dMessage" rows="4" required placeholder="Matériaux, quantités ou surface approximative, livraison grue ou retrait comptoir…"></textarea></div>
+      <div class="field full"><button class="btn btn-navy" type="submit" style="width:100%;justify-content:center">Envoyer par e-mail</button></div>
+      <div class="form-note full" id="devisNote">Votre logiciel e-mail vient de s'ouvrir avec la demande pré-remplie. Si rien ne se passe, écrivez directement à <a href="mailto:snpariscm@gmail.com"><b>snpariscm@gmail.com</b></a> ou appelez le 01 43 68 83 80.</div>
+    </form>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
