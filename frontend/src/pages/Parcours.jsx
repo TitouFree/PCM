@@ -52,6 +52,17 @@ const Parcours = ({ onDevis }) => (
                 </div>
                 <h2 className="mt-4 font-display text-3xl font-medium leading-tight text-ink sm:text-4xl">{f.title}</h2>
                 <p className="mt-4 max-w-xl text-base leading-relaxed text-slate">{f.desc}</p>
+                <div className="mt-5 max-w-xl border-l-2 border-terra/40 pl-4" data-testid={`parcours-catalogue-refs-${f.num}`}>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone">Au catalogue général</p>
+                  <ul className="mt-2 space-y-1.5">
+                    {f.catalogue.map((s) => (
+                      <li key={s.section} className="flex items-baseline justify-between gap-4 text-[13px]">
+                        <span className="font-semibold text-ink">« {s.section} »</span>
+                        <span className="shrink-0 font-mono text-[11px] text-terra">{s.pages}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <div className="mt-6 flex flex-wrap items-center gap-5">
                   <button
                     onClick={onDevis}
@@ -62,7 +73,7 @@ const Parcours = ({ onDevis }) => (
                     <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
                   <Link
-                    to="/catalogue"
+                    to={`/catalogue?doc=catalogue&page=${f.catalogue[0].catPage}`}
                     data-testid={`parcours-catalogue-${f.num}`}
                     className="link-underline text-xs font-bold uppercase tracking-widest text-slate transition-colors hover:text-navy"
                   >

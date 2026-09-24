@@ -67,6 +67,56 @@ FAMILIES = [
      "Profilés, croisillons, nivellement, petit colisage en libre-service.", "carreaux_ciment"),
 ]
 
+# Index réel du catalogue général (lu page par page sur les en-têtes d'origine).
+# page plaquette = page catalogue + 18 (18 pages éditoriales avant le catalogue).
+CATALOG_OFFSET = 18
+CATALOG_SECTIONS = [
+    ("Couverture", 1, 1),
+    ("Index", 2, 2),
+    ("Blocs béton, briques & terre cuite", 3, 4),
+    ("Ciments, chaux, plâtres, bétons & mortiers", 5, 6),
+    ("Ferraillage & acier", 7, 7),
+    ("Bois de coffrage, charpente & panneaux", 8, 9),
+    ("Toiture, couverture & zinguerie", 10, 10),
+    ("Isolation", 11, 12),
+    ("Plaques de plâtre, ossatures & carreaux de plâtre", 13, 14),
+    ("Enduits, ragréages & mortiers techniques", 15, 16),
+    ("Carrelage & faïence", 17, 17),
+    ("Colles, joints & accessoires de pose", 18, 20),
+    ("Outillage du carreleur", 21, 21),
+    ("Assainissement, PVC & géotextiles", 22, 22),
+    ("Peinture & finition", 23, 25),
+    ("Outillage & machines", 26, 28),
+    ("Visserie, fixation & chimie du bâtiment", 29, 30),
+    ("Installation de chantier, protection & EPI", 31, 32),
+    ("Menuiserie", 33, 33),
+    ("Livraison & services", 34, 34),
+    ("Nous trouver", 35, 35),
+    ("Notes", 36, 36),
+    ("4e de couverture", 37, 37),
+]
+
+# Famille (01-11) -> indices des sections du catalogue qui la couvrent.
+FAMILY_SECTIONS = {
+    "01": [17],
+    "02": [12, 15],
+    "03": [2, 3, 4, 13],
+    "04": [6],
+    "05": [7],
+    "06": [8],
+    "07": [10],
+    "08": [9, 11],
+    "09": [14],
+    "10": [5, 18],
+    "11": [16, 11],
+}
+
+
+def cat_pages_str(a, b):
+    pa, pb = a + CATALOG_OFFSET, b + CATALOG_OFFSET
+    return f"p. {pa}" if a == b else f"p. {pa} – {pb}"
+
+
 SERVICES = [
     ("Conseil technique", "Le bon produit et la bonne méthode de pose, expliqués au comptoir."),
     ("Stock sur place", "Vous repartez avec la marchandise. Devis rapide pour le reste."),
@@ -346,11 +396,23 @@ def page_family_divider(d, fam):
     c.setStrokeColor(LINE)
     c.setLineWidth(0.6)
     c.line(50, y - 24, W - 50, y - 24)
-    eyebrow(c, "Références complètes", 50, y - 52, size=7.5)
-    para(c, "Toutes les références, dimensions et conditionnements de cette "
-            "famille figurent dans le catalogue général repris en intégralité "
-            "dans la seconde partie de cette plaquette.",
-         50, y - 72, 400, size=9.8, leading=14.5, color=SLATE)
+    eyebrow(c, "Les références au catalogue général", 50, y - 52, size=7.5)
+    yy = y - 76
+    for idx in FAMILY_SECTIONS[num]:
+        name, a, b = CATALOG_SECTIONS[idx]
+        c.setFont("Sans-SB", 10)
+        c.setFillColor(INK)
+        c.drawString(50, yy, f"« {name} »")
+        c.setFont("Mono-Bd", 9)
+        c.setFillColor(TERRA)
+        c.drawRightString(W - 50, yy, cat_pages_str(a, b))
+        c.setStrokeColor(LINE)
+        c.setLineWidth(0.5)
+        c.line(50, yy - 8, W - 50, yy - 8)
+        yy -= 26
+    para(c, "Toutes les références, dimensions et conditionnements figurent sur "
+            "ces pages, reprises à l'identique dans la seconde partie de cette plaquette.",
+         50, yy - 6, 400, size=9.2, leading=13.5, color=STONE)
     footer(c, d.page)
 
 
@@ -427,20 +489,36 @@ def page_sommaire(d, cat_start, contact_page):
         ("Catalogue général", "Toutes les références, pages d'origine", f"{cat_start:02d}"),
         ("Contact & horaires", "Passez au comptoir", f"{contact_page:02d}"),
     ]
-    y = H - 190
+    y = H - 176
     for title, sub, no in entries:
-        c.setFont("Playfair-Md", 15)
+        c.setFont("Playfair-Md", 13.5)
         c.setFillColor(INK)
         c.drawString(50, y, title)
-        c.setFont("Sans", 9.5)
+        c.setFont("Sans", 8.8)
         c.setFillColor(SLATE)
-        c.drawString(50, y - 16, sub)
-        c.setFont("Playfair-MdIt", 15)
+        c.drawString(50, y - 14, sub)
+        c.setFont("Playfair-MdIt", 13.5)
         c.setFillColor(TERRA)
-        c.drawRightString(W - 50, y, no)
+        c.drawRightString(285, y, no)
         c.setStrokeColor(LINE)
-        c.line(50, y - 30, W - 50, y - 30)
-        y -= 56
+        c.line(50, y - 26, 285, y - 26)
+        y -= 46
+    # Index précis du catalogue général (colonne droite)
+    x2 = 320
+    eyebrow(c, "Index du catalogue général", x2, H - 176, size=7.5)
+    yy = H - 200
+    for name, a, b in CATALOG_SECTIONS:
+        c.setFont("Sans", 8.8)
+        c.setFillColor(INK)
+        label = name if pdfmetrics.stringWidth(name, "Sans", 8.8) <= 185 else name[:44] + "…"
+        c.drawString(x2, yy, label)
+        c.setFont("Mono", 8)
+        c.setFillColor(TERRA)
+        c.drawRightString(W - 50, yy, cat_pages_str(a, b).replace("p. ", ""))
+        c.setStrokeColor(LINE)
+        c.setLineWidth(0.4)
+        c.line(x2, yy - 6.5, W - 50, yy - 6.5)
+        yy -= 21.5
     footer(c, d.page)
 
 

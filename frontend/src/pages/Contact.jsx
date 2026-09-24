@@ -45,8 +45,22 @@ const Contact = ({ onDevis }) => (
                 <Instagram size={14} /> {COMPANY.instagram}
               </a>
             </div>
-            <div className="overflow-hidden border border-line">
-              <img src="/assets/plan_acces.png" alt="Plan d'accès — 110 rue Édouard Vaillant, Alfortville" className="w-full" data-testid="contact-map" />
+            <div className="overflow-hidden border border-line" data-testid="contact-map">
+              <iframe
+                title="Carte — 110 rue Édouard Vaillant, 94140 Alfortville"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=2.4108%2C48.8046%2C2.4268%2C48.8126&layer=mapnik&marker=48.8086324%2C2.4188248"
+                className="h-72 w-full"
+                loading="lazy"
+              />
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=110+rue+%C3%89douard+Vaillant+94140+Alfortville"
+                target="_blank"
+                rel="noreferrer"
+                data-testid="contact-itineraire"
+                className="flex items-center justify-center gap-2 bg-navy px-4 py-3 text-xs font-bold uppercase tracking-widest text-sand transition-colors duration-300 hover:bg-navy-soft"
+              >
+                <MapPin size={14} /> Itinéraire vers le comptoir
+              </a>
             </div>
           </div>
         </Reveal>

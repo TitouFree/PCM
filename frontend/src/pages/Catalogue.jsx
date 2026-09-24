@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { ChevronLeft, ChevronRight, Download, ZoomIn, ZoomOut } from "lucide-react";
 import { Reveal } from "../components/Reveal";
-import { DOWNLOADS } from "../data/content";
+import { CATALOGUE_SECTIONS, DOWNLOADS } from "../data/content";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -19,9 +20,12 @@ const DOCS = [
 ];
 
 const Catalogue = () => {
-  const [doc, setDoc] = useState(DOCS[2]);
+  const [params] = useSearchParams();
+  const initDoc = DOCS.find((d) => d.id === params.get("doc")) || DOCS[2];
+  const initPage = Math.max(1, parseInt(params.get("page") || "1", 10) || 1);
+  const [doc, setDoc] = useState(initDoc);
   const [numPages, setNumPages] = useState(null);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(initPage);
   const [scale, setScale] = useState(1);
   const [error, setError] = useState(false);
 
@@ -129,6 +133,27 @@ const Catalogue = () => {
               </Document>
             )}
           </div>
+
+          {doc.id === "catalogue" && (
+            <div className="mt-8 border border-line bg-white p-5 sm:p-6" data-testid="catalogue-index">
+              <p className="eyebrow">Accès direct par section</p>
+              <div className="mt-4 grid gap-1.5 sm:grid-cols-2 lg:grid-cols-3">
+                {CATALOGUE_SECTIONS.map((s) => (
+                  <button
+                    key={s.name}
+                    onClick={() => setPage(s.page)}
+                    data-testid={`catalogue-jump-${s.page}`}
+                    className={`flex items-baseline justify-between gap-3 px-3 py-2 text-left text-[13px] transition-colors duration-200 ${
+                      page >= s.page ? "bg-sand text-ink" : "text-slate hover:bg-sand hover:text-ink"
+                    }`}
+                  >
+                    <span className="font-semibold">{s.name}</span>
+                    <span className="shrink-0 font-mono text-[10px] text-terra">p. {s.page}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           <p className="mt-6 max-w-3xl text-[13px] leading-relaxed text-stone" data-testid="catalogue-search-note">
             La recherche par référence n'est pas proposée : les pages du catalogue

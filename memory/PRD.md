@@ -25,9 +25,16 @@ Créer DEUX plaquettes commerciales PDF (livrable principal) + un site catalogue
 
 ## Implémenté (24/09/2026)
 - Plaquette courte 8 p. A4 portrait : couverture, présentation (textes d'origine), services (6), familles 01-11 (descriptions d'origine), fabricants + coordonnées + horaires + CTA « PASSEZ AU COMPTOIR ». HQ 13 Mo + e-mail 0,8 Mo.
-- Plaquette complète 56 p. : couverture, présentation, services, sommaire paginé, parcours du chantier, 11 pages familles, fabricants, puis les 37 pages du catalogue général reprises à l'identique, contact final. HQ 51 Mo + e-mail 20 Mo.
-- Site : Accueil (hero parallax + reveal, marquee, stats, bento téléchargements HQ/e-mail, 11 familles, showroom), L'Entreprise, Parcours du chantier (11 étapes alternées), Catalogue (visionneuse 4 documents : courte/complète/catalogue/magazine, page par page, zoom 50-250 %, téléchargement, note recherche désactivée), Fabricants (bandeaux d'origine + 12 marques nommées), Contact (adresse, tél, e-mail, Instagram, horaires, zones livraison, plan, formulaire devis).
+- Plaquette complète 56 p. : couverture, présentation, services, sommaire paginé AVEC index précis du catalogue (23 sections, numéros de pages plaquette), parcours du chantier, 11 pages familles avec renvoi « Les références au catalogue général » (sections + pages), fabricants, puis les 37 pages du catalogue général reprises à l'identique, contact final. HQ 51 Mo + e-mail 20 Mo.
+- Index du catalogue lu page par page sur les en-têtes d'origine (catalogue 100 % image) : couverture 1, index 2, blocs béton 3-4, ciments 5-6, ferraillage 7, bois/charpente 8-9, toiture 10, isolation 11-12, plâtre 13-14, enduits/ragréages 15-16, carrelage 17, colles/joints 18-20, outillage carreleur 21, assainissement 22, peinture 23-25, outillage & machines 26-28, visserie 29-30, installation chantier/EPI 31-32, menuiserie 33, livraison 34, nous trouver 35, notes 36, 4e couv. 37. Page plaquette = page catalogue + 18.
+- Site : Accueil (hero parallax + reveal, marquee, stats, bento téléchargements HQ/e-mail, 11 familles, showroom), L'Entreprise, Parcours du chantier (11 étapes + sections catalogue par famille + liens profonds /catalogue?doc=catalogue&page=N), Catalogue (visionneuse 4 documents, page par page, zoom, accès direct par section, note recherche désactivée), Fabricants (bandeaux d'origine + 12 marques nommées ; le logo triangle orange reste visuel dans le bandeau, SANS nom, à la demande du client), Contact (carte OpenStreetMap interactive avec marqueur au 110 rue Édouard Vaillant + bouton itinéraire Google Maps, horaires, zones livraison, formulaire devis).
 - Formulaire devis : modal global + carte contact, envoi e-mail réel au comptoir (testé, email_id retourné), stockage Mongo.
+
+## Itération 2 (24/09/2026) — demandes client
+1. Logo triangle orange : conservé comme simple visuel dans les bandeaux fabricants, aucun nom attribué (aucun changement de code nécessaire, confirmé).
+2. Catalogue numéroté par famille : sommaire de la plaquette complète enrichi d'un index précis (23 sections + pages) ; chaque page famille liste ses sections catalogue avec numéros de pages ; site Parcours + Catalogue mis à jour en cohérence (liens profonds testés : page 11/37 via URL, saut à 23/37 via l'index). Aucune référence modifiée, aucune page supprimée.
+3. Plan d'accès image remplacé par carte OpenStreetMap interactive cliquable (marqueur géocodé 48.8086324, 2.4188248) + bouton itinéraire ; adresse écrite conservée dans les deux plaquettes PDF.
+4. Pas de mise en ligne pour le moment (non déployé).
 
 ## Vérifié
 - curl /api/health OK ; POST /api/devis OK (e-mail parti à snpariscm@gmail.com).
@@ -37,10 +44,10 @@ Créer DEUX plaquettes commerciales PDF (livrable principal) + un site catalogue
 
 ## Backlog priorisé
 - P0 : rien de bloquant.
-- P1 : logo triangle orange non identifié à confirmer par le client puis nommer sur la page Fabricants ; numérotation des pages catalogue par famille dans la plaquette complète (nécessite lecture manuelle du catalogue image).
+- P1 : déploiement production quand le client le demandera (explicitement reporté par le client le 24/09/2026).
 - P2 : recherche de références si une version texte du catalogue est fournie un jour ; version EN ; espace pro avec tarifs.
 
 ## Prochaines tâches
-1. Recueillir le nom du fabricant au logo triangle orange.
+1. Attendre la validation client de l'aperçu avant toute mise en ligne.
 2. Re-générer les plaquettes si nouveaux visuels/catalogue fournis (python3 scripts/build_pdfs.py).
-3. Déploiement production quand le client valide l'aperçu.
+3. Si le client confirme un jour le nom du logo triangle orange, l'ajouter à la liste Fabricants.
