@@ -97,7 +97,7 @@ const Downloads = () => (
     <Reveal>
       <p className="eyebrow">Les nouvelles plaquettes</p>
       <h2 className="mt-3 max-w-2xl font-display text-3xl font-medium leading-tight text-ink sm:text-5xl">
-        Deux plaquettes fusionnées, <span className="italic text-terra">une seule identité.</span>
+        Deux plaquettes, <span className="italic text-terra">une seule identité.</span>
       </h2>
       <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate">
         Deux documents entièrement recomposés à partir du Magazine et du catalogue

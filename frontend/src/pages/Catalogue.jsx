@@ -13,8 +13,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 const DOCS = [
-  { id: "courte", label: "Plaquette courte (fusionnée)", file: "/documents/PCM_Plaquette_Courte_Fusionnee.pdf" },
-  { id: "complete", label: "Plaquette complète (fusionnée)", file: "/documents/PCM_Plaquette_Complete_Fusionnee.pdf" },
+  { id: "courte", label: "Plaquette courte", file: "/documents/PCM_Plaquette_Courte.pdf" },
+  { id: "complete", label: "Plaquette complète", file: "/documents/PCM_Plaquette_Complete.pdf" },
   { id: "catalogue", label: "Catalogue général (source)", file: "/documents/Catalogue_General_PCM.pdf" },
   { id: "magazine", label: "Le Magazine (source)", file: "/documents/Ebauche_Magazine_PCM.pdf" },
 ];

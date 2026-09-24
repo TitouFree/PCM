@@ -780,16 +780,16 @@ def main():
         render_catalog(quality)
 
         short = build_short(img_dir)
-        with open(f"{OUT}/PCM_Plaquette_Courte_Fusionnee{suffix}.pdf", "wb") as f:
+        with open(f"{OUT}/PCM_Plaquette_Courte{suffix}.pdf", "wb") as f:
             f.write(short.getvalue())
 
         complete = build_complete(img_dir)
-        with open(f"{OUT}/PCM_Plaquette_Complete_Fusionnee{suffix}.pdf", "wb") as f:
+        with open(f"{OUT}/PCM_Plaquette_Complete{suffix}.pdf", "wb") as f:
             f.write(complete.getvalue())
         print(quality, "ok")
 
     # Passe de compression finale sur les versions e-mail (images ré-échantillonnées).
-    for base in ["PCM_Plaquette_Courte_Fusionnee", "PCM_Plaquette_Complete_Fusionnee"]:
+    for base in ["PCM_Plaquette_Courte", "PCM_Plaquette_Complete"]:
         p = f"{OUT}/{base}_Email.pdf"
         tmp = f"{OUT}/_tmp_email.pdf"
         compress_email(p, tmp)
