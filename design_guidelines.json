@@ -1,0 +1,432 @@
+{
+  "project_name": "Paris Carrelages et Matériaux (PCM) - Site Vitrine & Catalogue BTP",
+  "archetype": "Architectural Materiality & High-Craft Editorial (Swiss-Editorial meets Raw Construction Craft)",
+  "vibe": "Solide, noble, chantier, textures brutes, rigueur d'architecte et chaleur humaine de comptoir indépendant",
+  "identity_source": "PDF Ebauche 4 - Le Magazine (PCM Alfortville) & Catalogue Général PCM",
+  "fonts": {
+    "heading": "Playfair Display, Georgia, serif",
+    "subheading": "Source Sans 3, Outfit, Inter, sans-serif",
+    "body": "Source Sans 3, Inter, system-ui, sans-serif",
+    "mono": "JetBrains Mono, 'Courier New', monospace",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+  },
+  "colors": {
+    "primary_terracotta": "#A8623E",
+    "terracotta_hover": "#8C4E2E",
+    "terracotta_light": "#F0CDBC",
+    "terracotta_subtle": "#FDF8F5",
+    "bg_sand": "#F9F8F6",
+    "bg_card": "#FFFFFF",
+    "text_dark_anthracite": "#1F2226",
+    "text_slate_muted": "#5A5F66",
+    "text_stone_light": "#8E949D",
+    "border_subtle": "#E6E2DC",
+    "border_strong": "#CFCECA",
+    "industrial_dark": "#131518",
+    "industrial_surface": "#1B1E22",
+    "gold_accent": "#C49A58",
+    "badge_bg": "#F5EBE6",
+    "badge_text": "#8C4E2E"
+  },
+  "typography": {
+    "h1": "font-serif text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-[#1F2226] leading-[1.08]",
+    "h2": "font-serif text-2xl sm:text-3xl lg:text-4xl font-medium tracking-tight text-[#1F2226]",
+    "h3": "font-serif text-xl sm:text-2xl font-medium text-[#1F2226]",
+    "h4": "font-sans text-base sm:text-lg font-semibold tracking-wide uppercase text-[#1F2226]",
+    "eyebrow": "font-mono text-xs uppercase tracking-[0.25em] text-[#A8623E] font-semibold",
+    "body": "font-sans text-base leading-relaxed text-[#5A5F66]",
+    "body_sm": "font-sans text-sm leading-normal text-[#5A5F66]",
+    "mono_metric": "font-mono text-xs tracking-wider uppercase text-[#8E949D]"
+  },
+  "spacing_and_layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_padding": "py-16 sm:py-24 lg:py-32",
+    "hero_padding": "pt-28 pb-16 sm:pt-36 sm:pb-24 lg:pt-40 lg:pb-28",
+    "bento_gap": "gap-6 lg:gap-8",
+    "card_padding": "p-6 sm:p-8 lg:p-10"
+  },
+  "motion_and_awwwards_details": {
+    "lenis_smooth_scroll": "Enable smooth momentum scrolling via Lenis for that fluid, high-craft editorial feel",
+    "hero_reveal": "Masked line-by-line slide-up reveal with Framer Motion (staggerChildren: 0.12s, ease: [0.16, 1, 0.3, 1])",
+    "marquee_editorial": "Slow drifting editorial ribbon in footer/header/between sections with category families and slogans ('Des fondations aux finitions', 'Depuis 2011 à Alfortville', 'Stock sur place', 'Camion grue 27 t', 'Livraison 24h Île-de-France')",
+    "micro_interactions": "Subtle border tracing or ambient shadow shift on hover, image slow zoom scale-105 on hover, magnetic button effect on primary CTAs",
+    "page_transitions": "Framer Motion AnimatePresence with subtle fade & 10px translate on route changes"
+  },
+  "image_urls": {
+    "hero_banner": {
+      "url": "https://images.unsplash.com/photo-1783987597078-84d5ac51d518?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHw0fHxjb25zdHJ1Y3Rpb24lMjBtYXRlcmlhbHMlMjB3YXJlaG91c2UlMjB0aWxlJTIwc2hvd3Jvb218ZW58MHx8fHwxNzkwMjgxMTI3fDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Showroom et entrepôt Paris Carrelages et Matériaux Alfortville",
+      "usage": "Hero principal ou bandeau de présentation du showroom architectural"
+    },
+    "showroom_tiles_display": {
+      "url": "https://images.unsplash.com/photo-1643903032976-8c0d0556a8ea?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHwzfHxjb25zdHJ1Y3Rpb24lMjBtYXRlcmlhbHMlMjB3YXJlaG91c2UlMjB0aWxlJTIwc2hvd3Jvb218ZW58MHx8fHwxNzkwMjgxMTI3fDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Espace showroom d'Alfortville présentant les panneaux carrelages et menuiseries",
+      "usage": "Page L'entreprise & Section Showroom (notre métier d'origine)"
+    },
+    "showroom_corridor": {
+      "url": "https://images.unsplash.com/photo-1643902917449-98c7ef8c9685?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHwxfHxjb25zdHJ1Y3Rpb24lMjBtYXRlcmlhbHMlMjB3YXJlaG91c2UlMjB0aWxlJTIwc2hvd3Jvb218ZW58MHx8fHwxNzkwMjgxMTI3fDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Allée de choix carrelage grès cérame et faïence",
+      "usage": "Page Carrelage & Faïence / Parcours du Chantier Famille 07"
+    },
+    "warehouse_stock": {
+      "url": "https://images.pexels.com/photos/10284048/pexels-photo-10284048.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Rayonnages de matériaux et palettes de carrelage en stock",
+      "usage": "Section Stock sur place / Gros œuvre / Dépôt logistique"
+    },
+    "building_materials_storage": {
+      "url": "https://images.pexels.com/photos/10261153/pexels-photo-10261153.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Palettes de matériaux de construction rigoureusement ordonnées",
+      "usage": "Présentation des 11 familles de produits et logistique"
+    },
+    "tile_textures_flatlay": {
+      "url": "https://images.pexels.com/photos/4249689/pexels-photo-4249689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Échantillons de carrelages en grès cérame, marbre et pierre",
+      "usage": "Section Notre métier d'origine - 'Le carrelage se choisit en le touchant'"
+    },
+    "tile_pattern_mosaic": {
+      "url": "https://images.unsplash.com/photo-1541471943749-e5976783f6c3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHwzfHxjZXJhbWljJTIwdGlsZXMlMjBzYW1wbGVzJTIwdGV4dHVyZXxlbnwwfHx8fDE3OTAyODExMzF8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Carreaux motifs rétro et carreaux ciment décoratifs",
+      "usage": "Carrelages décors et carreaux de ciment showroom"
+    },
+    "masonry_craftsman": {
+      "url": "https://images.pexels.com/photos/19688828/pexels-photo-19688828.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Pose méticuleuse de briques et mortier par un maçon",
+      "usage": "Famille 03 Gros œuvre & maçonnerie / Artisan en action"
+    },
+    "trowel_repair": {
+      "url": "https://images.pexels.com/photos/33336594/pexels-photo-33336594.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Artisan appliquant un ragréage et mortier à la truelle",
+      "usage": "Famille 08 Colles, joints & ragréage"
+    },
+    "tools_belt": {
+      "url": "https://images.unsplash.com/photo-1454694220579-9d6672b1ec2a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxtYXNvbnJ5JTIwY29uc3RydWN0aW9uJTIwd29ya2VyJTIwdG9vbHN8ZW58MHx8fHwxNzkwMjgxMTM2fDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Outils de chantier professionnels et ceinture d'artisan",
+      "usage": "Famille 02 Machines & outillage et quincaillerie"
+    },
+    "tools_rack": {
+      "url": "https://images.unsplash.com/photo-1607586408909-151ba11a12e2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwyfHxtYXNvbnJ5JTIwY29uc3RydWN0aW9uJTIwd29ya2VyJTIwdG9vbHN8ZW58MHx8fHwxNzkwMjgxMTM2fDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Électroportatif et outillage de coupe de chantier",
+      "usage": "Machines & électroportatif pro (Makita, Bosch, Rubi)"
+    }
+  },
+  "pdf_sources": {
+    "ebauche_magazine": "https://customer-assets-agu9un31.emergentagent.net/job_f2b71fe9-ac40-49db-91a1-4c17b53b03c1/artifacts/g1alkc74_Ebauche%204%20-%20Le%20Magazine.pdf",
+    "catalogue_general": "https://customer-assets-agu9un31.emergentagent.net/job_f2b71fe9-ac40-49db-91a1-4c17b53b03c1/artifacts/13swlyvj_Catalogue%20general%20PCM.pdf",
+    "downloads": [
+      {
+        "id": "plaquette_courte",
+        "title": "Plaquette de Synthèse (4 pages)",
+        "subtitle": "L'essentiel de notre négoce : services, 11 familles & horaires",
+        "url": "https://customer-assets-agu9un31.emergentagent.net/job_f2b71fe9-ac40-49db-91a1-4c17b53b03c1/artifacts/g1alkc74_Ebauche%204%20-%20Le%20Magazine.pdf",
+        "size": "PDF Magazine · 4 pages · Haute définition"
+      },
+      {
+        "id": "plaquette_complete",
+        "title": "Plaquette Entreprise & Showroom",
+        "subtitle": "Présentation détaillée du showroom, conseils de pose et logistique 24h",
+        "url": "https://customer-assets-agu9un31.emergentagent.net/job_f2b71fe9-ac40-49db-91a1-4c17b53b03c1/artifacts/g1alkc74_Ebauche%204%20-%20Le%20Magazine.pdf",
+        "size": "PDF Entreprise · Guide complet"
+      },
+      {
+        "id": "catalogue_original",
+        "title": "Catalogue Général Références PCM",
+        "subtitle": "Catalogue complet des références produits BTP, carrelages et outillage",
+        "url": "https://customer-assets-agu9un31.emergentagent.net/job_f2b71fe9-ac40-49db-91a1-4c17b53b03c1/artifacts/13swlyvj_Catalogue%20general%20PCM.pdf",
+        "size": "Catalogue officiel · 37 pages"
+      }
+    ]
+  },
+  "the_11_product_families": [
+    {
+      "id": "01",
+      "slug": "installation-protection-chantier",
+      "title": "Installation & Protection de Chantier",
+      "description": "Protections de sols et d'escaliers, bâches polyéthylène, films adhésifs, barrières de sécurité et équipements de protection individuelle (EPI certifiés).",
+      "key_products": ["Film de masquage ultra-résistant", "Bâche de protection feutrée absorbante", "Gants anticoupure & casques de sécurité", "Balisage et rubans de signalisation"],
+      "image_key": "warehouse_stock"
+    },
+    {
+      "id": "02",
+      "slug": "machines-outillage",
+      "title": "Machines & Outillage",
+      "description": "Électroportatif professionnel, outils de pose de carrelage, coupe-carreaux manuels et électriques, malaxeurs à mortier et découpe haute précision.",
+      "key_products": ["Coupe-carreaux professionnel Rubi", "Malaxeur 1800W pour mortier-colle", "Meuleuses et disques diamantés", "Niveaux laser automatiques 360°"],
+      "image_key": "tools_rack"
+    },
+    {
+      "id": "03",
+      "slug": "gros-oeuvre-maconnerie",
+      "title": "Gros Œuvre & Maçonnerie",
+      "description": "Parpaings tous calibres, sacs de ciment gris et blanc, chaux, mortiers de montage, sable et gravier, cales à béton armé.",
+      "key_products": ["Parpaings creux 20x20x50 B40", "Ciment Calcia / Lafarge CEM II 32.5", "Sable de rivière 0/4 tamisé", "Mortier prêt à gâcher hydrofuge"],
+      "image_key": "masonry_craftsman"
+    },
+    {
+      "id": "04",
+      "slug": "toiture-couverture",
+      "title": "Toiture & Couverture",
+      "description": "Tuiles terre cuite et béton, ardoises naturelles, écrans sous-toiture HPV, faîtières, chatières et accessoires d'étanchéité de couverture.",
+      "key_products": ["Tuiles mécaniques grand moule", "Écran sous-toiture respirant R2", "Closoirs ventilés aluminium", "Bandes d'étanchéité solin plomb"],
+      "image_key": "building_materials_storage"
+    },
+    {
+      "id": "05",
+      "slug": "isolation",
+      "title": "Isolation Thermique & Acoustique",
+      "description": "Laines minérales (verre et roche), isolants biosourcés, panneaux polyuréthane haute performance et membranes d'étanchéité à l'air.",
+      "key_products": ["Laine de verre Isover Kraft 100 à 260mm", "Panneaux isolants sol haute résistance", "Membrane pare-vapeur étanche", "Scotch d'adhérence étanchéité à l'air"],
+      "image_key": "warehouse_stock"
+    },
+    {
+      "id": "06",
+      "slug": "platrerie-cloisons",
+      "title": "Plâtrerie & Cloisons",
+      "description": "Plaques de plâtre standard (BA13), hydrofuges, phoniques et coupe-feu, ossatures métalliques Stil prim, suspentes et rails.",
+      "key_products": ["Plaque BA13 standard & hydrofuge verte", "Montants et rails 48 / 70 galvanisés", "Enduit de jointoiement séchage rapide", "Bandes à joint micro-perforées"],
+      "image_key": "warehouse_stock"
+    },
+    {
+      "id": "07",
+      "slug": "carrelage-faience",
+      "title": "Carrelage & Faïence",
+      "description": "Le cœur de métier PCM depuis 2011 : grès cérame émaillé et pleine masse, faïence murale grand format. 6 aspects à toucher en showroom : pierre, bois, marbre, béton, carreau ciment, décor.",
+      "key_products": ["Grès cérame effet bois chêne naturel 20x120", "Carrelage aspect marbre Calacatta 60x120", "Dalles aspect béton ciré 80x80", "Carreaux style ciment décoratif"],
+      "image_key": "showroom_corridor"
+    },
+    {
+      "id": "08",
+      "slug": "colles-joints-ragreage",
+      "title": "Colles, Joints & Ragréage",
+      "description": "Colles à carrelage C2S1 / C2TE, ragréages autolissants P3/P4 fibrés, primaires d'accrochage universels, mortiers de jointoiement et nattes de désolidarisation.",
+      "key_products": ["Mortier-colle C2S1 déformable intérieur/extérieur", "Ragréage autolissant fibré fort nivellement", "Joint fin hydrofuge anti-moisissure", "Natte d'étanchéité sous carrelage (SPEC)"],
+      "image_key": "trowel_repair"
+    },
+    {
+      "id": "09",
+      "slug": "peinture",
+      "title": "Peinture & Produits de Finition",
+      "description": "Peintures intérieures mates, velours et satinées, impressions et sous-couches universelles, lasures bois, peintures de sol et façades.",
+      "key_products": ["Sous-couche opacifiante microporeuse", "Peinture velours dépolluante haute lessivabilité", "Peinture façade pliolite extérieure", "Rouleaux microfibres et pinceaux pro"],
+      "image_key": "tools_belt"
+    },
+    {
+      "id": "10",
+      "slug": "menuiserie",
+      "title": "Menuiserie & Fenêtres de Toit",
+      "description": "Fenêtres de toit type Velux, raccordements d'étanchéité, blocs-portes intérieurs postformés, plinthes et habillages menuisés.",
+      "key_products": ["Fenêtres de toit à rotation thermique", "Raccord d'étanchéité pour tuiles galbées", "Blocs-portes acoustiques prêts à peindre", "Plinthes assorties et finitions chêne"],
+      "image_key": "showroom_tiles_display"
+    },
+    {
+      "id": "11",
+      "slug": "quincaillerie-accessoires",
+      "title": "Quincaillerie & Accessoires de Pose",
+      "description": "Profilés de finition inox/alu, systèmes de croisillons autonivelants à cales et vis, chevilles tous matériaux, visserie professionnelle en libre-service.",
+      "key_products": ["Kit croisillons nivelants (pinces + cales)", "Profilés de finition quart de rond inox brossé", "Visserie plaques de plâtre phosphatée", "Chevilles nylon universelles haute charge"],
+      "image_key": "tools_belt"
+    }
+  ],
+  "sample_catalog_references": [
+    {
+      "ref": "PCM-CAR-0184",
+      "name": "Grès Cérame Pietra Di Vals 60x120 Rectifié",
+      "family": "Carrelage & Faïence",
+      "sub": "Effet Pierre naturelle",
+      "format": "60 x 120 cm - Ep. 9.5 mm",
+      "aspect": "Pierre naturelle minérale",
+      "usage": "Sol & Mur - Intérieur / Extérieur R10B",
+      "stock": "En stock showroom Alfortville",
+      "price_indicator": "Sur devis pro / particulier"
+    },
+    {
+      "ref": "PCM-CAR-0220",
+      "name": "Grès Cérame Rovere Naturale Lame 20x120",
+      "family": "Carrelage & Faïence",
+      "sub": "Effet Bois noble",
+      "format": "20 x 120 cm - Ep. 9 mm",
+      "aspect": "Chêne naturel brossé",
+      "usage": "Sol intérieur résidentiel & commercial",
+      "stock": "En stock",
+      "price_indicator": "Au m² - Devis comptoir"
+    },
+    {
+      "ref": "PCM-CAR-0315",
+      "name": "Carreau Ciment Héritage Géométrique 20x20",
+      "family": "Carrelage & Faïence",
+      "sub": "Décor Vintage",
+      "format": "20 x 20 cm - Ep. 8.5 mm",
+      "aspect": "Carreau ciment mat",
+      "usage": "Crédence, sol de cuisine, salle de bain",
+      "stock": "En stock",
+      "price_indicator": "Au carton - Devis comptoir"
+    },
+    {
+      "ref": "PCM-COL-0042",
+      "name": "Mortier-Colle C2S1 Déformable Haute Adhérence 25kg",
+      "family": "Colles, Joints & Ragréage",
+      "sub": "Pose carrelage grand format",
+      "format": "Sac de 25 kg",
+      "aspect": "Poudre grise / blanche",
+      "usage": "Grands carreaux, planchers chauffants, façades",
+      "stock": "En stock permanent (palette disponible)",
+      "price_indicator": "Au sac ou à la palette"
+    },
+    {
+      "ref": "PCM-RAG-0088",
+      "name": "Ragréage Autolissant Fibré P4S 25kg",
+      "family": "Colles, Joints & Ragréage",
+      "sub": "Préparation de sol",
+      "format": "Sac de 25 kg",
+      "aspect": "Poudre fluide autolissante",
+      "usage": "Rattrapage 3 à 30 mm intérieur/extérieur",
+      "stock": "En stock permanent",
+      "price_indicator": "Au sac"
+    },
+    {
+      "ref": "PCM-PLA-0010",
+      "name": "Plaque Plâtre Hydrofuge BA13 Placo Hydro 250x120",
+      "family": "Plâtrerie & Cloisons",
+      "sub": "Plaques techniques",
+      "format": "2500 x 1200 x 12.5 mm",
+      "aspect": "Carton vert hydrofuge H1",
+      "usage": "Cloisons et doublages pièces humides",
+      "stock": "En stock sur parc",
+      "price_indicator": "À la plaque / palette"
+    },
+    {
+      "ref": "PCM-GRO-0005",
+      "name": "Parpaing Creux Normalisé NF 20x20x50 B40",
+      "family": "Gros Œuvre & Maçonnerie",
+      "sub": "Maçonnerie de structure",
+      "format": "20 x 20 x 50 cm",
+      "aspect": "Béton brut haute résistance",
+      "usage": "Murs porteurs et façades",
+      "stock": "Sur parc extérieur (chargement chariot)",
+      "price_indicator": "À l'unité / palette"
+    },
+    {
+      "ref": "PCM-MAC-0050",
+      "name": "Coupe-Carreaux Manuel Pro 900mm avec Valise",
+      "family": "Machines & Outillage",
+      "sub": "Outillage de coupe carrelage",
+      "format": "Capacité coupe 90 cm rectiligne",
+      "aspect": "Châssis aluminium renforcé",
+      "usage": "Découpe nette grès cérame et faïence",
+      "stock": "En rayon outillage",
+      "price_indicator": "Vente comptoir"
+    },
+    {
+      "ref": "PCM-QUI-0112",
+      "name": "Kit Croisillons Autonivelants 2mm (300 Clips + 100 Cales)",
+      "family": "Quincaillerie & Accessoires",
+      "sub": "Nivellement parfait carrelage",
+      "format": "Seau chantier complet",
+      "aspect": "Clips jetables + cales réutilisables",
+      "usage": "Pose plane sans décalage de carrelage",
+      "stock": "En stock libre-service",
+      "price_indicator": "Au seau"
+    },
+    {
+      "ref": "PCM-ISO-0033",
+      "name": "Laine de Verre Roulée Kraft IBR Ép. 200mm R=5.00",
+      "family": "Isolation",
+      "sub": "Isolation combles et toiture",
+      "format": "Rouleau 4.5 x 1.2 m",
+      "aspect": "Voile kraft pare-vapeur quadrillé",
+      "usage": "Isolation thermique toiture et planchers",
+      "stock": "En stock dépôt",
+      "price_indicator": "Au rouleau"
+    }
+  ],
+  "manufacturers": [
+    { "name": "Weber (Saint-Gobain)", "specialty": "Colles à carrelage, joints décoratifs & mortiers techniques", "badge": "Partenaire Majeur" },
+    { "name": "Placo (Saint-Gobain)", "specialty": "Plaques de plâtre BA13, profilés Stil prim & doublages", "badge": "Partenaire Majeur" },
+    { "name": "Knauf", "specialty": "Systèmes d'isolation, cloisons sèches et plafonds suspendus", "badge": "Référencé" },
+    { "name": "Bostik", "specialty": "Mastics, étanchéités liquides, colles de précision & ragréages", "badge": "Partenaire Majeur" },
+    { "name": "Parexlanko", "specialty": "Mortiers de réparation, colles carrelage & ragréages", "badge": "Référencé" },
+    { "name": "PRB", "specialty": "Enduits de façade, mortiers spéciaux et sols décoratifs", "badge": "Référencé" },
+    { "name": "Isover", "specialty": "Laines minérales, isolation thermique et membranes d'étanchéité à l'air", "badge": "Référencé" },
+    { "name": "Rubi", "specialty": "Machines de coupe, malaxeurs et outillage pro du carreleur", "badge": "Référencé" },
+    { "name": "Cermix", "specialty": "Solutions de pose et joints céramiques industriels", "badge": "Référencé" },
+    { "name": "Velux", "specialty": "Fenêtres de toit, verrières et volets roulants motorisés", "badge": "Référencé" },
+    { "name": "Calcia / Heidelberg", "specialty": "Ciments normalisés NF et liants hydrauliques gros œuvre", "badge": "Référencé" },
+    { "name": "Marazzi & Céramiques Européennes", "specialty": "Grès cérame grand format effet pierre, béton, marbre et bois", "badge": "Sélection Showroom" }
+  ],
+  "company_key_facts": {
+    "name": "Paris Carrelages et Matériaux (Société Nouvelle PCM)",
+    "baseline": "Des fondations aux finitions",
+    "hook": "Votre partenaire de proximité pour tous vos projets de construction et de rénovation",
+    "founded_year": 2011,
+    "address": "110 rue Édouard Vaillant, 94140 Alfortville",
+    "phone": "01 43 68 83 80",
+    "email": "snpariscm@gmail.com",
+    "website": "pariscarrelages.fr",
+    "instagram": "@pariscarrelages",
+    "opening_hours": {
+      "weekdays": "Lundi – Jeudi : 6 h 30 – 18 h (pause 12 h – 13 h)",
+      "friday": "Vendredi : 6 h 30 – 17 h (pause 12 h – 13 h)",
+      "saturday": "Samedi : 8 h – 12 h",
+      "sunday": "Dimanche : Fermé"
+    },
+    "delivery": {
+      "priority_zones": ["Val-de-Marne (94)", "Paris (75)", "Seine-Saint-Denis (93)", "Hauts-de-Seine (92)", "Essonne (91)"],
+      "full_area": "Toute l'Île-de-France sur demande sous 24 h",
+      "fleet": "Camion 27 tonnes avec bras de grue télescopique pour déchargement chantier + plateau 3,5 tonnes passe-partout urbain"
+    },
+    "clientele": "Artisans & professionnels du BTP ET particuliers avertis. Réseau d'artisans poseurs de confiance recommandé sur demande.",
+    "core_strengths": [
+      {
+        "title": "Comptoir dès 6 h 30",
+        "description": "Pour que vos chantiers démarrent à l'heure, avant les bouchons franciliens."
+      },
+      {
+        "title": "Conseil technique en direct",
+        "description": "Le bon produit et la bonne méthode de pose expliqués par des spécialistes au comptoir."
+      },
+      {
+        "title": "Stock réel sur place",
+        "description": "Vous repartez directement avec la marchandise chargée dans votre véhicule ou camionnette."
+      },
+      {
+        "title": "Showroom d'exception",
+        "description": "Le carrelage se choisit en le touchant : 6 aspects majeurs exposés en vraie grandeur."
+      },
+      {
+        "title": "Livraison grue sous 24 h",
+        "description": "Directement sur votre chantier, en étage ou au pied de la bâtisse avec notre camion 27t grue."
+      }
+    ]
+  },
+  "interactive_components": {
+    "pdf_viewer_feature": {
+      "description": "Visionneuse interactive de catalogues PDF avec mode page par page, aperçu thumbnail, zoom avant/arrière, plein écran et bouton de téléchargement haute résolution",
+      "catalogs_available": [
+        { "id": "ebauche", "name": "Plaquette Magazine PCM (4 pages)", "url": "https://customer-assets-agu9un31.emergentagent.net/job_f2b71fe9-ac40-49db-91a1-4c17b53b03c1/artifacts/g1alkc74_Ebauche%204%20-%20Le%20Magazine.pdf" },
+        { "id": "general", "name": "Catalogue Général PCM (37 pages)", "url": "https://customer-assets-agu9un31.emergentagent.net/job_f2b71fe9-ac40-49db-91a1-4c17b53b03c1/artifacts/13swlyvj_Catalogue%20general%20PCM.pdf" }
+      ]
+    },
+    "quote_estimator_modal": {
+      "description": "Formulaire de demande de devis pro/particulier avec sélection de familles de produits, surface approximative ou liste de matériel, date de chantier souhaitée, option livraison grue ou retrait comptoir, envoi relié à l'API FastAPI backend",
+      "fields": ["nom", "societe_ou_particulier", "telephone", "email", "famille_produit", "surface_m2_ou_quantite", "livraison_adresse", "message"]
+    },
+    "catalog_search_engine": {
+      "description": "Moteur de recherche instantané filtrable par famille (les 11 familles), aspect (bois, pierre, béton, marbre, ciment), disponibilité de stock et mot-clé avec affichage en grille d'échantillons haut de gamme"
+    }
+  },
+  "navigation_structure": [
+    { "name": "Accueil", "path": "/" },
+    { "name": "L'Entreprise", "path": "/entreprise" },
+    { "name": "Parcours du Chantier", "path": "/parcours-chantier" },
+    { "name": "Catalogue & Visionneuse", "path": "/catalogue" },
+    { "name": "Fabricants", "path": "/fabricants" },
+    { "name": "Contact & Accès", "path": "/contact" }
+  ],
+  "general_ui_ux_guidelines": [
+    "Toujours utiliser des attributs data-testid sur chaque bouton, lien, champ de formulaire, onglet et carte de produit (ex: data-testid='cta-demande-devis', data-testid='pdf-download-plaquette-courte').",
+    "Ne jamais utiliser de fond entièrement transparent sur la barre de navigation ou les menus déroulants : utiliser le style Crystal Glass (bg-[#F9F8F6]/90 backdrop-blur-xl border-b border-[#E6E2DC]).",
+    "Garantir des contrastes WCAG AA : texte anthracite #1F2226 sur fond sable #F9F8F6 (ratio > 11:1), et terracotta #A8623E sur fond blanc pour les accents.",
+    "Respecter les règles de typographie : titres H1 à H3 en Playfair Display serif noble et élégant, corps de texte et labels en Source Sans 3 très lisible et aéré.",
+    "Pas de 'card partout' monotone : alterner blocs asymétriques 'Tetris', rubans d'exposition plein cadre, et listes numérotées inspirées de la grille éditoriale du magazine PCM.",
+    "Afficher clairement les points de conversion : Téléphone 01 43 68 83 80 cliquable, bouton 'Demander un devis' permanent, téléchargement des 3 PDF bien visible dès la page d'accueil."
+  ]
+}

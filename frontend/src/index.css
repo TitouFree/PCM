@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "Playfair Display";
+    src: url("./fonts/PlayfairDisplay-400.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Playfair Display";
+    src: url("./fonts/PlayfairDisplay-400-Italic.ttf") format("truetype");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Playfair Display";
+    src: url("./fonts/PlayfairDisplay-500.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Playfair Display";
+    src: url("./fonts/PlayfairDisplay-500-Italic.ttf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Playfair Display";
+    src: url("./fonts/PlayfairDisplay-600.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Playfair Display";
+    src: url("./fonts/PlayfairDisplay-700.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Source Sans 3";
+    src: url("./fonts/SourceSans3-400.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Source Sans 3";
+    src: url("./fonts/SourceSans3-600.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Source Sans 3";
+    src: url("./fonts/SourceSans3-700.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("./fonts/JetBrainsMono-400.ttf") format("truetype");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("./fonts/JetBrainsMono-700.ttf") format("truetype");
+    font-weight: 700;
+    font-display: swap;
+}
+
+@layer base {
+    :root {
+        --background: 43 33% 95%;
+        --foreground: 220 10% 14%;
+        --card: 0 0% 100%;
+        --card-foreground: 220 10% 14%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 220 10% 14%;
+        --primary: 203 75% 21%;
+        --primary-foreground: 40 33% 95%;
+        --secondary: 22 46% 45%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 40 15% 90%;
+        --muted-foreground: 215 7% 38%;
+        --accent: 22 46% 45%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 36 14% 85%;
+        --input: 36 14% 85%;
+        --ring: 203 75% 21%;
+        --radius: 0.25rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    html {
+        scroll-behavior: auto;
+    }
+    body {
+        @apply bg-sand text-ink font-body antialiased;
+        text-rendering: optimizeLegibility;
+    }
+    ::selection {
+        background: #A8623E;
+        color: #F6F4ED;
+    }
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+}
+
+@layer components {
+    .eyebrow {
+        @apply font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-terra;
+    }
+    .eyebrow-light {
+        @apply font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-terra-light;
+    }
+    .container-pcm {
+        @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+    }
+    .grain::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.5;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E");
+    }
+    .link-underline {
+        position: relative;
+    }
+    .link-underline::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        height: 1px;
+        width: 100%;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .link-underline:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+}
+
+/* react-pdf */
+.react-pdf__Page__canvas {
+    margin: 0 auto;
+    box-shadow: 0 18px 50px -18px rgba(13, 58, 92, 0.35);
+}
+.react-pdf__Page__textContent,
+.react-pdf__Page__annotations {
+    display: none;
+}
+
+/* Lenis */
+html.lenis, html.lenis body {
+    height: auto;
+}
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
